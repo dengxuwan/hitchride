@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0025)https://dhshop.github.io/ -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     
@@ -7,30 +6,32 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>DHShop</title>
+    <title>Ride</title>
+
 
     <!-- Bootstrap core CSS -->
-    <link href="./DHShop_files/bootstrap.min.css" rel="stylesheet">
+    <link href="./files/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom fonts for this template -->
-    <link href="./DHShop_files/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="./DHShop_files/css" rel="stylesheet" type="text/css">
-    <link href="./DHShop_files/css(1)" rel="stylesheet" type="text/css">
-    <link href="./DHShop_files/css(2)" rel="stylesheet" type="text/css">
-    <link href="./DHShop_files/css(3)" rel="stylesheet" type="text/css">
+    <link href="./files/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="./files/css" rel="stylesheet" type="text/css">
+    <link href="./files/css(1)" rel="stylesheet" type="text/css">
+    <link href="./files/css(2)" rel="stylesheet" type="text/css">
+    <link href="./files/css(3)" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 
     <!-- Custom styles for this template -->
-    <link href="./DHShop_files/agency.min.css" rel="stylesheet">
+    <link href="./files/agency.min.css" rel="stylesheet">
 
   <style type="text/css"></style></head>
 
   <body id="page-top">
+    <div id="app">
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="https://dhshop.github.io/#page-top">Ride拼车</a>
+        <a class="navbar-brand js-scroll-trigger" href="#">Ride拼车</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
           <i class="fa fa-bars"></i>
@@ -44,13 +45,13 @@
               <a class="nav-link js-scroll-trigger" href="index.html#portfolio">发布行程</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="https://dhshop.github.io/#mine">行程列表</a>
+              <a class="nav-link js-scroll-trigger" href="index.html#mine">行程列表</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="https://dhshop.github.io#about">个人</a>
+              <a class="nav-link js-scroll-trigger" href="index.html#about">个人</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="https://dhshop.github.io/#contact">联系我们</a>
+              <a class="nav-link js-scroll-trigger" href="index.html#contact">联系我们</a>
             </li>
           </ul>
         </div>
@@ -112,24 +113,74 @@
             <h3 class="section-subheading text-muted">乘客支付的NAS直接到您的钱包，没有中间商赚差价</h3>
           </div>
         </div>
-        <div class="row">
+        <el-row :gutter="20" class="row_cust">  
+          <el-form :model="travelInfo" ref="ruleForm" :label-width="labelWidth" :rules="rules">
+            <el-col :span="10">
+              <el-form-item label="姓名:" prop="name">
+                <el-input v-model="travelInfo.name" ></el-input>
+               </el-form-item>
+            </el-col>
 
-          <div class="col-md-4 col-sm-6 portfolio-item">
-            <a class="portfolio-link" data-toggle="modal" href="https://dhshop.github.io/#portfolioModal1">
-              <div class="portfolio-hover">
-                <div class="portfolio-hover-content">
-                  <i class="fa fa-plus fa-3x"></i>
-                </div>
-              </div>
-              <img class="img-fluid" src="./DHShop_files/8g.jpg" alt="">
-            </a>
-            <div class="portfolio-caption">
-              <h4>广东移动8G流量</h4>
-              <p class="text-muted">30天有效</p>
-            </div>
-          </div>
+            <el-col :span="10">
+              <el-form-item label="联系方式:" prop="phone">
+                <el-input v-model="travelInfo.phone" ></el-input>
+               </el-form-item>
+            </el-col>
 
-        </div>
+            <el-col :span="10">
+              <el-form-item label="出发地点:" prop="fromAddress">
+                <el-input v-model="travelInfo.fromAddress" ></el-input>
+               </el-form-item>
+            </el-col>
+
+            <el-col :span="10">
+              <el-form-item label="目的地:" prop="distination">
+                <el-input v-model="travelInfo.distination" ></el-input>
+               </el-form-item>
+            </el-col>
+
+            <el-col :span="10">
+              <el-form-item label="车型:" prop="type">
+                <el-input v-model="travelInfo.type" ></el-input>
+               </el-form-item>
+            </el-col>
+
+            <el-col :span="10">
+              <el-form-item label="座位数:" prop="count">
+                <el-input v-model="travelInfo.count" type="number"></el-input>
+               </el-form-item>
+            </el-col>
+
+            <el-col :span="10">
+              <el-form-item label="出发时间:" prop="goTime">
+                <el-date-picker
+                  v-model="travelInfo.goTime"
+                  value-format="timestamp"
+                  format="yyyy 年 MM 月 dd 日 HH:mm"
+                  type="datetime"
+                  placeholder="选择日期时间"
+                  align="right">
+                </el-date-picker>
+               </el-form-item>
+            </el-col>
+
+            <el-col :span="10">
+              <el-form-item label="价格:" prop="price">
+                <el-input v-model="travelInfo.price" placeholder="单位Nas" type="number"></el-input>
+              </el-form-item>
+            </el-col>
+          <el-col :span="14">
+            <el-form-item label="备注" prop="remark">
+                <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="travelInfo.remark" placeholder="备注"></el-input>
+             </el-form-item>
+           </el-col>
+          <el-col :span="14">
+           <el-form-item>
+              <el-button type="primary" @click="toPublish()">发布行程</el-button>
+            </el-form-item>
+          </el-col>
+          </el-form>
+        </el-row>
       </div>
     </section>
 
@@ -144,86 +195,70 @@
         <div class="row">
           <div class="next-table only-bottom-border basic-table">
             <div class="next-table-inner">
-          <div class="next-table-header-inner">
-            <table>
-              <colgroup>
-                <col style="width: 45px;"><col><col><col><col><col>
-              </colgroup>
-              <tbody>
-                <tr>
-                  <th rowspan="1" class="next-table-header-node first">
-                    <div class="next-table-cell-wrapper"></div>
-                  </th>
-                  <th rowspan="1" class="next-table-header-node">
-                    <div class="next-table-cell-wrapper">出发地
-                    </div>
-                  </th>
-                  <th rowspan="1" class="next-table-header-node">
-                    <div class="next-table-cell-wrapper">目的地</div>
-                  </th>
-                  <th rowspan="1" class="next-table-header-node">
-                    <div class="next-table-cell-wrapper">出发时间</div>
-                  </th>
-                  <th rowspan="1" class="next-table-header-node">
-                    <div class="next-table-cell-wrapper">车费</div>
-                  </th>
-                  <th rowspan="1" class="next-table-header-node">
-                    <div class="next-table-cell-wrapper">座位数</div>
-                  </th>
-                  <th rowspan="1" class="next-table-header-node">
-                    <div class="next-table-cell-wrapper">已有乘客</div>
-                  </th>
-                  <th rowspan="1" class="next-table-header-node last">
-                    <div class="next-table-cell-wrapper">操作</div>
-                  </th>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="next-table-body">
-            <table>
-              <colgroup>
-                <col style="width: 45px;">
-                <col><col><col><col><col>
-              </colgroup>
-                <tbody>
-                  <tr class="next-table-row first">
-                    <td class="next-table-cell first">
-                      <div class="next-table-cell-wrapper">
-                        <span>1</span>
-                      </div>
-                    </td>
-                    <td class="next-table-cell">
-                      <div class="next-table-cell-wrapper">深圳南山科技园</div>
-                    </td>
-                    <td class="next-table-cell">
-                        <div class="next-table-cell-wrapper">湖南邵阳市人民政府</div>
-                    </td>
-                    <td class="next-table-cell">
-                      <div class="next-table-cell-wrapper">2018年6月14日</div>
-                    </td>
-                    <td class="next-table-cell">
-                      <div class="next-table-cell-wrapper">10 Nas</div>
-                    </td>
-                    <td class="next-table-cell">
-                      <div class="next-table-cell-wrapper">3人</div>
-                    </td>
-                    <td class="next-table-cell">
-                      <div class="next-table-cell-wrapper">2人</div>
-                    </td>
-                    <td class="next-table-cell last">
-                      <div class="next-table-cell-wrapper">
-                        <div class="enhance-table-operation" style="line-height: 28px;">
-                          <a href="javascript:openDetail()" style="margin-right: 12px; text-decoration: none;">查看详情</a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
+            
+            <el-table 
+              v-loading="allListLoading"
+              :data="allList"
+              :row-class-name="tableRowClassName">
+              <el-table-column
+                prop="fromAddress"
+                label="出发地点"
+                width="200">
+              </el-table-column>
+              <el-table-column
+                prop="distination"
+                label="目的地"
+                width="200">
+              </el-table-column>
+              <el-table-column
+                prop="goTime"
+                label="出发时间"
+                width="200">
+              </el-table-column>
+               <el-table-column
+               align="center"
+                label="费用">
+                 <template slot-scope="scope">
+                    <span>{{scope.row.price}}nas<span>
+                </template>
+              </el-table-column>
+               <el-table-column
+               align="center"
+                label="座位数">
+                 <template slot-scope="scope">
+                    <span>{{scope.row.count}}个<span>
+                </template>
+              </el-table-column>
+               <el-table-column
+               align="center"
+                label="已有乘客">
+                <template slot-scope="scope">
+                    <span>{{scope.row.attents.length}}人<span>
+                </template>
+              </el-table-column>
+               <el-table-column
+                prop="status"
+                align="center"
+                label="状态">
+                <template slot-scope="scope">
+                   <span v-if="scope.row.isAttent" style="color:#E6A23C">已参加</span>
+                   <span v-else-if="scope.row.status">已过期</span>
+                   <span v-else-if="!scope.row.status">进行中</span>
+                    <span v-else></span>
+                </template>
+              </el-table-column>
+              <el-table-column
+                fixed="right"
+                label="操作"
+                align="center"
+                width="100">
+                <template slot-scope="scope">
+                  <el-button @click="toDetail(scope.row)" type="text" size="small">查看</el-button>
+                  <el-button type="text" size="small" v-if="!scope.row.isAttent&&!scope.row.status" @click="toAttent(scope.row)">参加</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          
             </div>
           </div>
 
@@ -285,7 +320,7 @@
         <div class="row">
           <div class="col-lg-12 text-center">
             <h2 class="section-heading text-uppercase">关于</h2>
-            <h3 class="section-subheading text-muted">星云链的先行者，一款使用 NAS 支付的商店。</h3>
+            <h3 class="section-subheading text-muted">星云链的先行者，一款使用 NAS 支付的拼车平台。</h3>
           </div>
         </div>
         <div class="row">
@@ -293,7 +328,7 @@
             <ul class="timeline">
               <li>
                 <div class="timeline-image">
-                  <img class="rounded-circle img-fluid" src="./DHShop_files/1.jpg" alt="">
+                  <img class="rounded-circle img-fluid" src="./files/1.jpg" alt="">
                 </div>
                 <div class="timeline-panel">
                   <div class="timeline-heading">
@@ -305,51 +340,6 @@
                   </div>
                 </div>
               </li>
-
-<!--               <li class="timeline-inverted">
-                <div class="timeline-image">
-                  <img class="rounded-circle img-fluid" src="img/about/2.jpg" alt="">
-                </div>
-                <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h4>March 2011</h4>
-                    <h4 class="subheading">An Agency is Born</h4>
-                  </div>
-                  <div class="timeline-body">
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
-                  </div>
-                </div>
-              </li>
-
-              <li>
-                <div class="timeline-image">
-                  <img class="rounded-circle img-fluid" src="img/about/3.jpg" alt="">
-                </div>
-                <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h4>December 2012</h4>
-                    <h4 class="subheading">Transition to Full Service</h4>
-                  </div>
-                  <div class="timeline-body">
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
-                  </div>
-                </div>
-              </li>
-
-              <li class="timeline-inverted">
-                <div class="timeline-image">
-                  <img class="rounded-circle img-fluid" src="img/about/4.jpg" alt="">
-                </div>
-                <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h4>July 2014</h4>
-                    <h4 class="subheading">Phase Two Expansion</h4>
-                  </div>
-                  <div class="timeline-body">
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
-                  </div>
-                </div>
-              </li> -->
 
               <li class="timeline-inverted">
                 <div class="timeline-image">
@@ -380,7 +370,7 @@
     <footer>
       <div class="container">
         <div align="center">
-          <span class="copyright">Copyright © DHShop 2018</span>
+          <span class="copyright">Copyright © Ride 基于星云链，<a target="_blank" href="https://incentive.nebulas.io/cn/signup.html?invite=KvuuZ">成为开发者</a></span>
         </div>
       </div>
     </footer>
@@ -401,36 +391,42 @@
               <div class="col-lg-8 mx-auto">
                 <div class="modal-body">
                   <!-- Project Details Go Here -->
-                  <h2 class="text-uppercase">广东移动8G流量</h2>
-                  <p class="item-intro text-muted">活动时间:即日起至2018年6月30日</p>
-                  <img class="img-fluid d-block mx-auto" src="./DHShop_files/8g.jpg" alt="">
-                  <p>活动对象:
-                      广东移动受邀用户(不包括4G随心王、万花筒套餐、任我用套餐、非密友圈用户、和多号副号、万能副卡移动用户)
+            
+                  <h4 class="text-uppercase">行程详情</h4>
+                  <p class="item-intro text-muted">出发时间:<span>{{detailRow.goTime | getDateTimeStr}}</span></p>
+                  <p>发起人姓名:
+                      <span >{{detailRow.name}}</span>
                   </p>
-                  
-                  <div id="firstModel" style="">
-                     <input type="text" class="form-control" id="phone_content" placeholder="手机号码">
-                     <br>
-                     <button class="btn btn-primary" type="button" id="firstModelButton">
-                      0.3 NAS 购买</button>
-                  </div>
-                  
-                  <div align="center" id="model1_search_loading" style="display: none;">
-                  <div class="sk-circle">
-                  <div class="sk-circle1 sk-child"></div>
-                  <div class="sk-circle2 sk-child"></div>
-                  <div class="sk-circle3 sk-child"></div>
-                  <div class="sk-circle4 sk-child"></div>
-                  <div class="sk-circle5 sk-child"></div>
-                  <div class="sk-circle6 sk-child"></div>
-                  <div class="sk-circle7 sk-child"></div>
-                  <div class="sk-circle8 sk-child"></div>
-                  <div class="sk-circle9 sk-child"></div>
-                  <div class="sk-circle10 sk-child"></div>
-                  <div class="sk-circle11 sk-child"></div>
-                  <div class="sk-circle12 sk-child"></div>
-                  </div>
-                  <p>正在处理，请稍候</p>
+                  <p>发起人区块链钱包:
+                      <span>{{detailRow.author}}</span>
+                  </p>
+                   <p>发起人联系方式:
+                      <span>{{detailRow.phone}}</span>
+                  </p>
+                   <p>出发地点:
+                      <span >{{detailRow.fromAddress}}</span>
+                  </p>
+                  <p>目的地点:
+                      <span>{{detailRow.distination}}</span>
+                  </p>
+                  <p>车型:
+                      <span>{{detailRow.type}}</span>
+                  </p>
+                  <p>车费:
+                      <span>{{detailRow.price}}</span>
+                  </p>
+                   <p>座位数:
+                      <span>{{detailRow.count}}</span>
+                  </p>
+                  <p>已参加人数:
+                      <span>{{detailRow.attents.length}}</span>
+                  </p>
+                  <p>乘客信息:
+                      <p v-for="(item, index) in detailRow.attents">
+                        {{index+1}}、{{item.name}}<br>
+                      </p>
+                  </p>
+
                   </div>
 
                 </div>
@@ -441,26 +437,56 @@
       </div>
     </div>
 
+  <el-dialog
+    title="信息录入"
+    :visible.sync="dialogVisible"
+    width="30%">
+  <div>
+    <el-row class="row_cust">  
+          <el-form :model="attentInfo" ref="ruleForm1" :rules="attentRule">
+            <el-col :span="20">
+              <el-form-item label="姓名:" prop="name">
+                <el-input v-model="attentInfo.name" ></el-input>
+               </el-form-item>
+            </el-col>
+
+            <el-col :span="20">
+              <el-form-item label="联系方式:" prop="phone">
+                <el-input v-model="attentInfo.phone" ></el-input>
+               </el-form-item>
+            </el-col>
+          </el-form>
+        </el-row>
+  </div>
+  <span slot="footer" class="dialog-footer" v-if="dialogVisible">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="attent()">确 定</el-button>
+  </span>
+</el-dialog>
+  
+</div>
+
+</body></html>
+
+
 
     <!-- Bootstrap core JavaScript -->
-    <script src="./DHShop_files/jquery.min.js.下载"></script>
-    <script src="./DHShop_files/bootstrap.bundle.min.js.下载"></script>
+    <script src="./files/jquery.min.js"></script>
+    <script src="./files/bootstrap.bundle.min.js"></script>
 
     <!-- Plugin JavaScript -->
-    <script src="./DHShop_files/jquery.easing.min.js.下载"></script>
+    <script src="./files/jquery.easing.min.js"></script>
 
-    <!-- Contact form JavaScript -->
-    <script src="./DHShop_files/jqBootstrapValidation.js.下载"></script>
-    <script src="./DHShop_files/contact_me.js.下载"></script>
 
     <!-- Custom scripts for this template -->
-    <script src="./DHShop_files/agency.min.js"></script>
-
-    <script src="./DHShop_files/nebulas.js.下载"></script>
-    <script src="./DHShop_files/nebPay.js.下载"></script>
-    <script src="./DHShop_files/app.js"></script>
+    <script src="./files/agency.min.js"></script>
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+    <script src="js/nebulas.js"></script>
+    <script src="js/nebPay.js"></script>
+    <script src="js/config.js"></script>
+      <script src="js/index.js"></script>
 
     <style type="text/css">
 
@@ -578,9 +604,23 @@
       40% {
         -webkit-transform: scale(1);
                 transform: scale(1); } }
+
+  .el-table .warning-row {
+    background: oldlace;
+  }
+
+  .el-table .success-row {
+    background: #f0f9eb;
+  }
+  .has-gutter tr tr{
+    padding:15px;
+  }
+  .next-table th {
+    padding: 15px;
+    background: #fff;
+    color: #999;
+    text-align: left;
+    font-weight: 400;
+    border: 1px solid #eeeff3;
+}
       </style>
-
-  
-
-
-</body></html>

@@ -32,7 +32,7 @@ var TravelInfo = function(obj) {
 		this.author = obj.author;
 		this.phone = obj.phone;
 		this.fromAddress = obj.fromAddress;
-		this.distination = obj.destination;
+		this.distination = obj.distination;
 		this.type = obj.type;
 		this.count = obj.count;
 		this.price = obj.price;
@@ -302,15 +302,15 @@ hitchRideContract.prototype = {
 		if (!travelInfo) {
 			throw new Error("没有找到此行程信息!");
 		}
-		if(travelInfo.attents && travelInfo.attents.length<travelInfo.count){
-			return new Error("count fail");
+		if (!travelInfo.attents || travelInfo.attents.length >= travelInfo.count) {
+			throw new Error("count fail");
 		}
-		if (value.div(this._wei) !== travelInfo.price) {
-			return new Error("Error amount");
+		if ((value.div(this._wei)).toString() !== travelInfo.price) {
+			throw new Error("Error amount");
 		}
-		var result = Blockchain.transfer(TravelInfo.author, value);
+		var result = Blockchain.transfer(travelInfo.author, value);
 		if (!result) {
-			return new Error("fail transfer");
+			throw new Error("fail transfer");
 		}
 		var attentInfo = new AttentInfo({
 			id: from + time,
@@ -321,6 +321,7 @@ hitchRideContract.prototype = {
 			time: time
 		});
 		travelInfo.addAttent(attentInfo);
+		this.travelInfos.set(travelId, travelInfo);
 		return "success";
 	},
 	//查看自己参加的行程

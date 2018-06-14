@@ -3,13 +3,13 @@
 var config = {
 	chainId: 1,
 	apiPrefix: "https://testnet.nebulas.io", //https://testnet.nebulas.io  https://mainnet.nebulas.io
-	contractAddr: "n1sqMRo4Bon5Fcx1cSuiMYdRoci326m6M99", //main n1zsohpv63CnmUs7aeVBfgeQBozpK5bmTMk test n21iah7tXxgxTZ6R81n9UuWGwULcuVansBd
+	contractAddr: "n1sXdXDKZZvDujLDaHszdo2cPbuenMTYcwX", //main n1zsohpv63CnmUs7aeVBfgeQBozpK5bmTMk test n21iah7tXxgxTZ6R81n9UuWGwULcuVansBd
 	myAddress: "n1JeDTMq5xHq6Y16yApYbMdT4Vw4K9kzbK9",
 	gaslimit: 2000000,
 	gasprice: 1000000,
 	transfer: "transfer",
-	addPatent: "addPatent",
-	getIndexData: "getIndexData",
+	addTravel: "addTravel",
+	attention: "attention",
 	getAll: "getAll",
 	comment: "comment", //添加评论
 	getPatentInfo: "getPatentInfo",
@@ -104,12 +104,12 @@ function calcReward(profits) {
 }
 
 function getTimeStr(date) {
-	var y = new Date(date * 1000).getFullYear();
-	var m = new Date(date * 1000).getMonth() + 1
-	var d = new Date(date * 1000).getDate();
+	var y = new Date(date).getFullYear();
+	var m = new Date(date).getMonth() + 1
+	var d = new Date(date).getDate();
 
-	var h = new Date(date * 1000).getHours()
-	var mm = new Date(date * 1000).getMinutes()
+	var h = new Date(date).getHours()
+	var mm = new Date(date).getMinutes()
 	return y + "-" + m + '-' + d + " " + h + ':' + mm
 }
 
@@ -176,7 +176,3 @@ function isToday(str, str1) {
 }
 var intervalQuery;
 var serialNumber;
-
-template.defaults.imports.dateFormat = function(date) {
-	return getTimeStr(date);
-};
