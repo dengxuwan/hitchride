@@ -302,6 +302,9 @@ hitchRideContract.prototype = {
 		if (!travelInfo) {
 			throw new Error("没有找到此行程信息!");
 		}
+		if(travelInfo.attents && travelInfo.attents.length<travelInfo.count){
+			return new Error("count fail");
+		}
 		if (value.div(this._wei) !== travelInfo.price) {
 			return new Error("Error amount");
 		}

@@ -18,6 +18,7 @@
     <link href="./DHShop_files/css(1)" rel="stylesheet" type="text/css">
     <link href="./DHShop_files/css(2)" rel="stylesheet" type="text/css">
     <link href="./DHShop_files/css(3)" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 
     <!-- Custom styles for this template -->
     <link href="./DHShop_files/agency.min.css" rel="stylesheet">
@@ -29,15 +30,15 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="https://dhshop.github.io/#page-top">DHShop</a>
+        <a class="navbar-brand js-scroll-trigger" href="https://dhshop.github.io/#page-top">Ride拼车</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
           <i class="fa fa-bars"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav text-uppercase ml-auto">
+          <ul class="navbar-nav text-uppercase" style="margin:auto">
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="index.html#services">帮助服务</a>
+              <a class="nav-link js-scroll-trigger" href="index.html#services">使用方法</a>
             </li>
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="index.html#portfolio">发布行程</a>
@@ -60,9 +61,6 @@
     <header class="masthead">
       <div class="container">
         <div class="intro-text">
-          <div class="intro-lead-in" style="color:#fed136">星云拼车</div>
-          <div class="intro-heading text-uppercase">去中心化的全球顺风车拼车平台<br>
-          基于区块链3.0星云链 发布顺风车行程</div>
         </div>
       </div>
     </header>
@@ -72,8 +70,8 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
-            <h2 class="section-heading text-uppercase">帮助服务</h2>
-            <h3 class="section-subheading text-muted">我们竭诚为您提供最优质的服务</h3>
+            <h2 class="section-heading text-uppercase">使用方法</h2>
+            <h3 class="section-subheading text-muted">简易的操作步骤，快速发布拼车行程</h3>
           </div>
         </div>
         <div class="row text-center">
@@ -82,26 +80,24 @@
               <i class="fa fa-circle fa-stack-2x text-primary"></i>
               <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
             </span>
-            <h4 class="service-heading">购物</h4>
-            <p class="text-muted">您可以通过 NAS 来支付本商店所有的商品</p>
+            <h4 class="service-heading">安装钱包</h4>
+            <p class="text-muted">需要安装 <a target="_blank" href="https://github.com/ChengOrangeJu/WebExtensionWallet">WebExtensionWallet</a>。移动端请安装<a target="_blank" href="https://nano.nebulas.io/index_cn.html">NAS nano 钱包</a></p>
           </div>
           <div class="col-md-4">
             <span class="fa-stack fa-4x">
               <i class="fa fa-circle fa-stack-2x text-primary"></i>
               <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
             </span>
-            <h4 class="service-heading">服务</h4>
-            <p class="text-muted">在您购物的过程中如有任何问题，请联系我们。</p>
+            <h4 class="service-heading">发布行程</h4>
+            <p class="text-muted">发布行程，等待乘客支付NAS参与行程</p>
           </div>
           <div class="col-md-4">
             <span class="fa-stack fa-4x">
               <i class="fa fa-circle fa-stack-2x text-primary"></i>
               <i class="fa fa-lock fa-stack-1x fa-inverse"></i>
             </span>
-            <h4 class="service-heading">帮助</h4>
-            <p class="text-muted">使用前请安装 
-            <a target="_blank" href="https://github.com/ChengOrangeJu/WebExtensionWallet">WebExtensionWallet</a> 
-            激活Dapp的功能。移动端请安装<a target="_blank" href="https://nano.nebulas.io/index_cn.html">NAS nano 钱包</a></p>
+            <h4 class="service-heading">联系乘客</h4>
+            <p class="text-muted">联系乘客获取上车位置，出发吧</p>
           </div>
         </div>
       </div>
@@ -112,8 +108,8 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
-            <h2 class="section-heading text-uppercase">购物</h2>
-            <h3 class="section-subheading text-muted">生活狂欢季,享受您的购物之旅</h3>
+            <h2 class="section-heading text-uppercase">发布行程</h2>
+            <h3 class="section-subheading text-muted">乘客支付的NAS直接到您的钱包，没有中间商赚差价</h3>
           </div>
         </div>
         <div class="row">
@@ -132,76 +128,104 @@
               <p class="text-muted">30天有效</p>
             </div>
           </div>
-<!--           <div class="col-md-4 col-sm-6 portfolio-item">
-            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal2">
-              <div class="portfolio-hover">
-                <div class="portfolio-hover-content">
-                  <i class="fa fa-plus fa-3x"></i>
-                </div>
-              </div>
-              <img class="img-fluid" src="img/portfolio/02-thumbnail.jpg" alt="">
-            </a>
-            <div class="portfolio-caption">
-              <h4>Explore</h4>
-              <p class="text-muted">Graphic Design</p>
+
+        </div>
+      </div>
+    </section>
+
+        <section class="bg-light" id="portfolio">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">行程列表</h2>
+            <h3 class="section-subheading text-muted">乘客选择行程，支付NAS进行搭乘</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="next-table only-bottom-border basic-table">
+            <div class="next-table-inner">
+          <div class="next-table-header-inner">
+            <table>
+              <colgroup>
+                <col style="width: 45px;"><col><col><col><col><col>
+              </colgroup>
+              <tbody>
+                <tr>
+                  <th rowspan="1" class="next-table-header-node first">
+                    <div class="next-table-cell-wrapper"></div>
+                  </th>
+                  <th rowspan="1" class="next-table-header-node">
+                    <div class="next-table-cell-wrapper">出发地
+                    </div>
+                  </th>
+                  <th rowspan="1" class="next-table-header-node">
+                    <div class="next-table-cell-wrapper">目的地</div>
+                  </th>
+                  <th rowspan="1" class="next-table-header-node">
+                    <div class="next-table-cell-wrapper">出发时间</div>
+                  </th>
+                  <th rowspan="1" class="next-table-header-node">
+                    <div class="next-table-cell-wrapper">车费</div>
+                  </th>
+                  <th rowspan="1" class="next-table-header-node">
+                    <div class="next-table-cell-wrapper">座位数</div>
+                  </th>
+                  <th rowspan="1" class="next-table-header-node">
+                    <div class="next-table-cell-wrapper">已有乘客</div>
+                  </th>
+                  <th rowspan="1" class="next-table-header-node last">
+                    <div class="next-table-cell-wrapper">操作</div>
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="next-table-body">
+            <table>
+              <colgroup>
+                <col style="width: 45px;">
+                <col><col><col><col><col>
+              </colgroup>
+                <tbody>
+                  <tr class="next-table-row first">
+                    <td class="next-table-cell first">
+                      <div class="next-table-cell-wrapper">
+                        <span>1</span>
+                      </div>
+                    </td>
+                    <td class="next-table-cell">
+                      <div class="next-table-cell-wrapper">深圳南山科技园</div>
+                    </td>
+                    <td class="next-table-cell">
+                        <div class="next-table-cell-wrapper">湖南邵阳市人民政府</div>
+                    </td>
+                    <td class="next-table-cell">
+                      <div class="next-table-cell-wrapper">2018年6月14日</div>
+                    </td>
+                    <td class="next-table-cell">
+                      <div class="next-table-cell-wrapper">10 Nas</div>
+                    </td>
+                    <td class="next-table-cell">
+                      <div class="next-table-cell-wrapper">3人</div>
+                    </td>
+                    <td class="next-table-cell">
+                      <div class="next-table-cell-wrapper">2人</div>
+                    </td>
+                    <td class="next-table-cell last">
+                      <div class="next-table-cell-wrapper">
+                        <div class="enhance-table-operation" style="line-height: 28px;">
+                          <a href="javascript:openDetail()" style="margin-right: 12px; text-decoration: none;">查看详情</a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
             </div>
           </div>
-          <div class="col-md-4 col-sm-6 portfolio-item">
-            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal3">
-              <div class="portfolio-hover">
-                <div class="portfolio-hover-content">
-                  <i class="fa fa-plus fa-3x"></i>
-                </div>
-              </div>
-              <img class="img-fluid" src="img/portfolio/03-thumbnail.jpg" alt="">
-            </a>
-            <div class="portfolio-caption">
-              <h4>Finish</h4>
-              <p class="text-muted">Identity</p>
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-6 portfolio-item">
-            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal4">
-              <div class="portfolio-hover">
-                <div class="portfolio-hover-content">
-                  <i class="fa fa-plus fa-3x"></i>
-                </div>
-              </div>
-              <img class="img-fluid" src="img/portfolio/04-thumbnail.jpg" alt="">
-            </a>
-            <div class="portfolio-caption">
-              <h4>Lines</h4>
-              <p class="text-muted">Branding</p>
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-6 portfolio-item">
-            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal5">
-              <div class="portfolio-hover">
-                <div class="portfolio-hover-content">
-                  <i class="fa fa-plus fa-3x"></i>
-                </div>
-              </div>
-              <img class="img-fluid" src="img/portfolio/05-thumbnail.jpg" alt="">
-            </a>
-            <div class="portfolio-caption">
-              <h4>Southwest</h4>
-              <p class="text-muted">Website Design</p>
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-6 portfolio-item">
-            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal6">
-              <div class="portfolio-hover">
-                <div class="portfolio-hover-content">
-                  <i class="fa fa-plus fa-3x"></i>
-                </div>
-              </div>
-              <img class="img-fluid" src="img/portfolio/06-thumbnail.jpg" alt="">
-            </a>
-            <div class="portfolio-caption">
-              <h4>Window</h4>
-              <p class="text-muted">Photography</p>
-            </div>
-          </div> -->
 
         </div>
       </div>
@@ -383,14 +407,6 @@
                   <p>活动对象:
                       广东移动受邀用户(不包括4G随心王、万花筒套餐、任我用套餐、非密友圈用户、和多号副号、万能副卡移动用户)
                   </p>
-                  <p>
-                    活动内容:
-                    1.每个号码仅可购买一次
-                    <br>2.成功领取后流量立即生效(以短信为准),流量有效期为30天,到期自动失效。
-                  </p>
-                  <p>
-                    购买成功后,请您添加QQ好友 414149871 , 并将手机号码以及购买单号发送过去。我们将有工作人员为您服务，此业务需要您提供验证码办理。
-                  </p>
                   
                   <div id="firstModel" style="">
                      <input type="text" class="form-control" id="phone_content" placeholder="手机号码">
@@ -425,175 +441,6 @@
       </div>
     </div>
 
-    <!-- Modal 2 -->
-    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="close-modal" data-dismiss="modal">
-            <div class="lr">
-              <div class="rl"></div>
-            </div>
-          </div>
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-8 mx-auto">
-                <div class="modal-body">
-                  <!-- Project Details Go Here -->
-                  <h2 class="text-uppercase">Project Name</h2>
-                  <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                  <img class="img-fluid d-block mx-auto" src="./DHShop_files/02-full.jpg" alt="">
-                  <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                  <ul class="list-inline">
-                    <li>Date: January 2017</li>
-                    <li>Client: Explore</li>
-                    <li>Category: Graphic Design</li>
-                  </ul>
-                  <button class="btn btn-primary" data-dismiss="modal" type="button">
-                    <i class="fa fa-times"></i>
-                    Close Project</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal 3 -->
-    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="close-modal" data-dismiss="modal">
-            <div class="lr">
-              <div class="rl"></div>
-            </div>
-          </div>
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-8 mx-auto">
-                <div class="modal-body">
-                  <!-- Project Details Go Here -->
-                  <h2 class="text-uppercase">Project Name</h2>
-                  <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                  <img class="img-fluid d-block mx-auto" src="./DHShop_files/03-full.jpg" alt="">
-                  <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                  <ul class="list-inline">
-                    <li>Date: January 2017</li>
-                    <li>Client: Finish</li>
-                    <li>Category: Identity</li>
-                  </ul>
-                  <button class="btn btn-primary" data-dismiss="modal" type="button">
-                    <i class="fa fa-times"></i>
-                    Close Project</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal 4 -->
-    <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="close-modal" data-dismiss="modal">
-            <div class="lr">
-              <div class="rl"></div>
-            </div>
-          </div>
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-8 mx-auto">
-                <div class="modal-body">
-                  <!-- Project Details Go Here -->
-                  <h2 class="text-uppercase">Project Name</h2>
-                  <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                  <img class="img-fluid d-block mx-auto" src="./DHShop_files/04-full.jpg" alt="">
-                  <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                  <ul class="list-inline">
-                    <li>Date: January 2017</li>
-                    <li>Client: Lines</li>
-                    <li>Category: Branding</li>
-                  </ul>
-                  <button class="btn btn-primary" data-dismiss="modal" type="button">
-                    <i class="fa fa-times"></i>
-                    Close Project</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal 5 -->
-    <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="close-modal" data-dismiss="modal">
-            <div class="lr">
-              <div class="rl"></div>
-            </div>
-          </div>
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-8 mx-auto">
-                <div class="modal-body">
-                  <!-- Project Details Go Here -->
-                  <h2 class="text-uppercase">Project Name</h2>
-                  <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                  <img class="img-fluid d-block mx-auto" src="./DHShop_files/05-full.jpg" alt="">
-                  <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                  <ul class="list-inline">
-                    <li>Date: January 2017</li>
-                    <li>Client: Southwest</li>
-                    <li>Category: Website Design</li>
-                  </ul>
-                  <button class="btn btn-primary" data-dismiss="modal" type="button">
-                    <i class="fa fa-times"></i>
-                    Close Project</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal 6 -->
-    <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="close-modal" data-dismiss="modal">
-            <div class="lr">
-              <div class="rl"></div>
-            </div>
-          </div>
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-8 mx-auto">
-                <div class="modal-body">
-                  <!-- Project Details Go Here -->
-                  <h2 class="text-uppercase">Project Name</h2>
-                  <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                  <img class="img-fluid d-block mx-auto" src="./DHShop_files/06-full.jpg" alt="">
-                  <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                  <ul class="list-inline">
-                    <li>Date: January 2017</li>
-                    <li>Client: Window</li>
-                    <li>Category: Photography</li>
-                  </ul>
-                  <button class="btn btn-primary" data-dismiss="modal" type="button">
-                    <i class="fa fa-times"></i>
-                    Close Project</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Bootstrap core JavaScript -->
     <script src="./DHShop_files/jquery.min.js.下载"></script>
@@ -607,11 +454,13 @@
     <script src="./DHShop_files/contact_me.js.下载"></script>
 
     <!-- Custom scripts for this template -->
-    <script src="./DHShop_files/agency.min.js.下载"></script>
+    <script src="./DHShop_files/agency.min.js"></script>
 
     <script src="./DHShop_files/nebulas.js.下载"></script>
     <script src="./DHShop_files/nebPay.js.下载"></script>
-    <script src="./DHShop_files/app.js.下载"></script>
+    <script src="./DHShop_files/app.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 
     <style type="text/css">
 
