@@ -205,7 +205,6 @@ var vue = new Vue({
                   this.attentInfo.phone = "";
                   this.clickRow = row;
                   this.dialogVisible = true;
-
             },
             attent: function() {
                   this.$refs['ruleForm1'].validate((valid) => {

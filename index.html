@@ -375,6 +375,33 @@
       </div>
     </footer>
 
+    <el-dialog
+      title="信息录入"
+      :visible.sync="dialogVisible"
+      width="30%">
+      <div>
+        <el-row class="row_cust">  
+              <el-form :model="attentInfo" ref="ruleForm1" :rules="attentRule">
+                <el-col :span="20">
+                  <el-form-item label="姓名:" prop="name">
+                    <el-input v-model="attentInfo.name" ></el-input>
+                   </el-form-item>
+                </el-col>
+
+                <el-col :span="20">
+                  <el-form-item label="联系方式:" prop="phone">
+                    <el-input v-model="attentInfo.phone" ></el-input>
+                   </el-form-item>
+                </el-col>
+              </el-form>
+            </el-row>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="attent()">确 定</el-button>
+      </span>
+  </el-dialog>
+
     <!-- Portfolio Modals -->
 
     <!-- Modal 1 -->
@@ -437,32 +464,7 @@
       </div>
     </div>
 
-  <el-dialog
-    title="信息录入"
-    :visible.sync="dialogVisible"
-    width="30%">
-  <div>
-    <el-row class="row_cust">  
-          <el-form :model="attentInfo" ref="ruleForm1" :rules="attentRule">
-            <el-col :span="20">
-              <el-form-item label="姓名:" prop="name">
-                <el-input v-model="attentInfo.name" ></el-input>
-               </el-form-item>
-            </el-col>
 
-            <el-col :span="20">
-              <el-form-item label="联系方式:" prop="phone">
-                <el-input v-model="attentInfo.phone" ></el-input>
-               </el-form-item>
-            </el-col>
-          </el-form>
-        </el-row>
-  </div>
-  <span slot="footer" class="dialog-footer" v-if="dialogVisible">
-    <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="attent()">确 定</el-button>
-  </span>
-</el-dialog>
   
 </div>
 
