@@ -2,8 +2,8 @@
 
 var config = {
 	chainId: 1,
-	apiPrefix: "https://testnet.nebulas.io", //https://testnet.nebulas.io  https://mainnet.nebulas.io
-	contractAddr: "n21ypkCuaXxdZGpDJnqFBTAJWoUXyTXMcap", //main n1zsohpv63CnmUs7aeVBfgeQBozpK5bmTMk test n21iah7tXxgxTZ6R81n9UuWGwULcuVansBd
+	apiPrefix: "https://mainnet.nebulas.io", //https://testnet.nebulas.io  https://mainnet.nebulas.io
+	contractAddr: "n1oSLqoHQzegc4ytt4N7ES8YL5VnpvBRvaV", //main n1zsohpv63CnmUs7aeVBfgeQBozpK5bmTMk test n21iah7tXxgxTZ6R81n9UuWGwULcuVansBd
 	myAddress: "n1JeDTMq5xHq6Y16yApYbMdT4Vw4K9kzbK9",
 	gaslimit: 2000000,
 	gasprice: 1000000,
