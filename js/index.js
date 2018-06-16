@@ -4,7 +4,12 @@ var vue = new Vue({
             this.getWallectInfo();
       },
       mounted: function() {
-
+            this.$message({
+                  showClose: true,
+                  duration: 5000,
+                  message: '温馨提示:使用本站所有功能请安装钱包插件，否则将无法使用发布行程的功能！',
+                  type: 'warning'
+            });
       },
       updated: function() {},
       data() {
@@ -70,10 +75,13 @@ var vue = new Vue({
                         }],
 
                   },
-                  allList: [],
+                  allList: [], //所有行程列表
+                  myList: [], // 我的行程列表
+                  myAttent: [], //我的参与列表
                   labelWidth: '100px', //表单左边label文字宽度
                   curWallet: "", //钱包地址
                   allListLoading: true,
+                  personalLoading: true,
                   dialogVisible: false,
                   attentInfo: {
                         name: "",
@@ -92,17 +100,20 @@ var vue = new Vue({
                         goTime: '',
                         attents: [],
                   },
+                  tabPosition: 'left'
             }
       },
       filters: {
-            getDateTimeStr: function(value) {
+            getDateTimeStr: function(v) {
+                  var value = Number(v);
                   var y = new Date(value).getFullYear();
                   var m = new Date(value).getMonth() + 1
                   var d = new Date(value).getDate();
 
                   var h = new Date(value).getHours()
                   var mm = new Date(value).getMinutes()
-                  return y + "-" + m + '-' + d + " " + h + ':' + mm
+                  var result = y + "-" + m + '-' + d + " " + h + ':' + mm;
+                  return result;
             }
       },
 
@@ -120,6 +131,16 @@ var vue = new Vue({
             },
             //发布行程
             toPublish: function() {
+                  if (this.curWallet === '') {
+                        this.$message({
+                              showClose: true,
+                              duration: 0,
+                              message: '温馨提示:使用本站所有功能请安装钱包插件，否则将无法使用发布行程的功能！',
+                              type: 'error'
+                        });
+                        return;
+                  }
+
                   this.$refs['ruleForm'].validate((valid) => {
                         if (valid) {
                               this.publish();
@@ -141,6 +162,7 @@ var vue = new Vue({
                               if (e.data.data.account) {
                                     vue.curWallet = e.data.data.account;
                                     vue.getAll();
+                                    vue.personal();
                               }
                         }
                   });
@@ -201,6 +223,15 @@ var vue = new Vue({
                   });
             },
             toAttent: function(row) {
+                  if (this.curWallet === '') {
+                        this.$message({
+                              showClose: true,
+                              duration: 0,
+                              message: '温馨提示:使用本站所有功能请安装钱包插件，否则将无法使用参与行程的功能！',
+                              type: 'error'
+                        });
+                        return;
+                  }
                   this.attentInfo.name = "";
                   this.attentInfo.phone = "";
                   this.clickRow = row;
@@ -234,11 +265,28 @@ var vue = new Vue({
             },
             toDetail: function(row) {
                   //处理
-                  row.price = row.price + "nas";
-                  row.count = row.count + "个";
+                  // row.price = row.price + "nas";
+                  // row.count = row.count + "个";
                   this.detailRow = row;
                   console.log(this.detailRow, 'dddddddddddddddddddddd');
                   $("#portfolioModal1").modal("show");
+            },
+            //查询个人中心需要的数据
+            personal: function() {
+                  if (!this.curWallet || this.curWallet === '') {
+                        address = config.myAddress;
+                  } else {
+                        address = this.curWallet;
+                  }
+                  query(address, config.personal, "", function(resp) {
+                        console.log(resp, "查询个人中心");
+                        var obj = JSON.parse(resp.result)
+                        vue.myList = vue.handleList(obj.myTravels);
+                        console.log(vue.myList, '111111111111');
+                        vue.myAttent = obj.attentsRecords;
+                        console.log(vue.allList, "查询个人中心");
+                        vue.personalLoading = false;
+                  });
             }
       }
 });

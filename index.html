@@ -42,13 +42,16 @@
               <a class="nav-link js-scroll-trigger" href="index.html#services">使用方法</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="index.html#portfolio">发布行程</a>
+              <a class="nav-link js-scroll-trigger" href="index.html#publish">发布行程</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="index.html#mine">行程列表</a>
+              <a class="nav-link js-scroll-trigger" href="index.html#allList">行程列表</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="index.html#about">个人</a>
+              <a class="nav-link js-scroll-trigger" href="index.html#personal">个人</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="index.html#about">关于</a>
             </li>
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="index.html#contact">联系我们</a>
@@ -105,7 +108,7 @@
     </section>
 
     <!-- Portfolio Grid -->
-    <section class="bg-light" id="portfolio">
+    <section class="bg-light" id="publish">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
@@ -184,7 +187,7 @@
       </div>
     </section>
 
-        <section class="bg-light" id="portfolio">
+        <section class="bg-light" id="allList">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
@@ -214,6 +217,9 @@
                 prop="goTime"
                 label="出发时间"
                 width="200">
+                 <template slot-scope="scope">
+                    <span>{{scope.row.goTime | getDateTimeStr}}<span>
+                 </template>
               </el-table-column>
                <el-table-column
                align="center"
@@ -266,47 +272,152 @@
       </div>
     </section>
 
-    <section id="mine">
+    <section id="personal">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
-            <h2 class="section-heading text-uppercase">我的</h2>
-            <h3 class="section-subheading text-muted">输入手机号码查看购物记录</h3>
+            <h2 class="section-heading text-uppercase">个人</h2>
+            <h3 class="section-subheading text-muted">查看我的行程与我参与人行程列表</h3>
           </div>
         </div>
 
       <div class="row clearfix">
-        <div class="col-md-8 column">
-          <input type="text" class="form-control" id="minePhoneNo" placeholder="手机号码">
-          <br>
-          <p id="mine_p">
-          </p>
 
-          <div align="center" id="mine_search_loading" style="display: none;">
-          <div class="sk-circle">
-          <div class="sk-circle1 sk-child"></div>
-          <div class="sk-circle2 sk-child"></div>
-          <div class="sk-circle3 sk-child"></div>
-          <div class="sk-circle4 sk-child"></div>
-          <div class="sk-circle5 sk-child"></div>
-          <div class="sk-circle6 sk-child"></div>
-          <div class="sk-circle7 sk-child"></div>
-          <div class="sk-circle8 sk-child"></div>
-          <div class="sk-circle9 sk-child"></div>
-          <div class="sk-circle10 sk-child"></div>
-          <div class="sk-circle11 sk-child"></div>
-          <div class="sk-circle12 sk-child"></div>
-          </div>
-          <p>正在处理，请稍候</p>
-          </div>
+        <div class="col-md-12 column">
+          <el-tabs type="border-card" :tabPosition="tabPosition">
+            <el-tab-pane label="我发布的行程">
+              
+              <el-table 
+              v-loading="personalLoading"
+              :row-class-name="tableRowClassName"
+              :data="myList">
+               <el-table-column type="expand">
+                    <template slot-scope="props">
+                      <el-form label-position="left" inline class="demo-table-expand">
+                        <div v-for="(element,index) in props.row.attents">
+                          <el-form-item label="乘客姓名">
+                            <span>{{ element.name }}</span>
+                          </el-form-item>
+                          <el-form-item label="乘客联系方式">
+                            <span>{{ element.phone }}</span>
+                          </el-form-item>
+                        </div>
+                      </el-form>
+                    </template>
+              </el-table-column>
+              <el-table-column
+                prop="fromAddress"
+                label="出发地点"
+                width="200">
+              </el-table-column>
+              <el-table-column
+                prop="distination"
+                label="目的地"
+                width="200">
+              </el-table-column>
+              <el-table-column
+                prop="goTime"
+                label="出发时间"
+                width="200">
+                 <template slot-scope="scope">
+                    <span>{{scope.row.goTime | getDateTimeStr}}<span>
+                </template>
+              </el-table-column>
+               <el-table-column
+               align="center"
+                label="费用">
+                 <template slot-scope="scope">
+                    <span>{{scope.row.price}}nas<span>
+                </template>
+              </el-table-column>
+               <el-table-column
+               align="center"
+                label="座位数">
+                 <template slot-scope="scope">
+                    <span>{{scope.row.count}}个<span>
+                </template>
+              </el-table-column>
+               <el-table-column
+               align="center"
+                label="已有乘客">
+                <template slot-scope="scope">
+                    <span>{{scope.row.attents.length}}人<span>
+                </template>
+              </el-table-column>
+               <el-table-column
+                prop="status"
+                align="center"
+                label="状态">
+                <template slot-scope="scope">
+                   <span v-if="scope.row.isAttent" style="color:#E6A23C">已参加</span>
+                   <span v-else-if="scope.row.status">已过期</span>
+                   <span v-else-if="!scope.row.status">进行中</span>
+                    <span v-else></span>
+                </template>
+              </el-table-column>
+            </el-table>
 
-        </div>
-        <div class="col-md-4 column">
-          <div id="getInfo">
-              <div class="resume-date text-md-right">
-                <button class="btn btn-default btn-block" onclick="searchCard()" style="color: rgb(253,200,42);">搜索</button>
-             </div>
-          </div>
+            </el-tab-pane>
+            <el-tab-pane label="我参与的行程">
+              <el-table 
+              v-loading="personalLoading"
+              :row-class-name="tableRowClassName"
+              :data="myAttent">
+              
+              <el-table-column
+                prop="fromAddress"
+                label="出发地点"
+                width="200">
+              </el-table-column>
+              <el-table-column
+                prop="distination"
+                label="目的地"
+                width="200">
+              </el-table-column>
+              <el-table-column
+                prop="goTime"
+                label="出发时间"
+                width="200">
+               <template slot-scope="scope">
+                    <span>{{scope.row.goTime | getDateTimeStr}}<span>
+                </template>
+              </el-table-column>
+               <el-table-column
+               align="center"
+                label="费用">
+                 <template slot-scope="scope">
+                    <span>{{scope.row.price}}nas<span>
+                </template>
+              </el-table-column>
+               <el-table-column
+               align="center"
+                label="座位数">
+                 <template slot-scope="scope">
+                    <span>{{scope.row.count}}个<span>
+                </template>
+              </el-table-column>
+               <el-table-column
+               align="center"
+                label="已有乘客">
+                <template slot-scope="scope">
+                    <span>{{scope.row.attents.length}}人<span>
+                </template>
+              </el-table-column>
+               <el-table-column
+                prop="status"
+                align="center"
+                label="状态">
+                <template slot-scope="scope">
+                   <span v-if="scope.row.isAttent" style="color:#E6A23C">已参加</span>
+                   <span v-else-if="scope.row.status">已过期</span>
+                   <span v-else-if="!scope.row.status">进行中</span>
+                    <span v-else></span>
+                </template>
+              </el-table-column>
+            </el-table>
+
+            </el-tab-pane>
+          </el-tabs>
         </div>
       </div>
 
@@ -320,35 +431,15 @@
         <div class="row">
           <div class="col-lg-12 text-center">
             <h2 class="section-heading text-uppercase">关于</h2>
-            <h3 class="section-subheading text-muted">星云链的先行者，一款使用 NAS 支付的拼车平台。</h3>
+            <h3 class="section-subheading text-muted">星云链的先行者，一款使用 NAS 支付的拼车平台。<br>将“乘客-司机”的信息流通结构改造为“乘客-乘客”以及“乘客-司机”的多维度流通结构，
+              <br>让乘客间用车需求形成信息交互，合并同类需求.<br>
+            拼车的费用直接转入司机钱包地址，不经过任何中介，没有中间商赚差价，
+          <br>完全实现去中心化理念，让司机与乘客之间形成信息透明的闭环.</h3>
           </div>
         </div>
         <div class="row">
           <div class="col-lg-12">
-            <ul class="timeline">
-              <li>
-                <div class="timeline-image">
-                  <img class="rounded-circle img-fluid" src="./files/1.jpg" alt="">
-                </div>
-                <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h4>2018.6</h4>
-                    <h4 class="subheading">DHShop 成立</h4>
-                  </div>
-                  <div class="timeline-body">
-                    <p class="text-muted">DHShop 是一款网上购物商店。目前商店中的货品均只接受 NAS 来支付。未来我们将上线更多商品，敬请期待。</p>
-                  </div>
-                </div>
-              </li>
-
-              <li class="timeline-inverted">
-                <div class="timeline-image">
-                  <h4>Be Part
-                    <br>Of Our
-                    <br>Story!</h4>
-                </div>
-              </li>
-            </ul>
+            
           </div>
         </div>
       </div>
@@ -359,8 +450,11 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
-            <h2 class="section-heading text-uppercase">联系我们</h2>
-            <p style="color: white">如果您有任何问题，欢迎给我们 <a href="mailto:rickliu414149871@gmail.com">发邮件</a></p>
+            <h2 class="section-heading text-uppercase">星云链的未来，等你一起创造</h2>
+            
+            <p style="color: white">
+              <el-button type="success" onclick="window.location.href='https://incentive.nebulas.io/cn/signup.html?invite=KvuuZ'">成为开发者</el-button>
+            <p style="color: white">如何联系作者: deng-xu@qq.com</p>
           </div>
         </div>
       </div>
@@ -370,7 +464,7 @@
     <footer>
       <div class="container">
         <div align="center">
-          <span class="copyright">Copyright © Ride 基于星云链，<a target="_blank" href="https://incentive.nebulas.io/cn/signup.html?invite=KvuuZ">成为开发者</a></span>
+          <span class="copyright">Copyright © Ride 基于星云链拼车平台，<a target="_blank" href="https://nebulas.io/">了解星云链</a></span>
         </div>
       </div>
     </footer>
@@ -450,7 +544,7 @@
                   </p>
                   <p>乘客信息:
                       <p v-for="(item, index) in detailRow.attents">
-                        {{index+1}}、{{item.name}}<br>
+                        {{index+1}}、{{item.name}}-{{item.phone}}<br>
                       </p>
                   </p>
 

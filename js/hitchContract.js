@@ -152,8 +152,8 @@ hitchRideContract.prototype = {
 			count: "3",
 			price: "15",
 			remark: "准时出发，请乘客准时到达南山科技园立交桥上车",
-			goTime: Blockchain.transaction.timestamp.toString(),
-			time: Blockchain.transaction.timestamp.toString(),
+			goTime: "1529131359517",
+			time: "1529131359517",
 			attents: []
 		});
 		this.travelInfoKeys.set(this._jSize, travelInfo.id);
@@ -342,6 +342,13 @@ hitchRideContract.prototype = {
 			}
 		}
 		return list.reverse();
+	},
+	//查询个人中心需要的信息
+	personal: function() {
+		var obj = {};
+		obj['myTravels'] = this.getMyList();
+		obj['attentsRecords'] = this.getMyAttents();
+		return obj;
 	}
 };
 module.exports = hitchRideContract;
