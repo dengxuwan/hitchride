@@ -100,7 +100,9 @@ var vue = new Vue({
                         goTime: '',
                         attents: [],
                   },
-                  tabPosition: 'left'
+                  tabPosition: 'left',
+                  timer:{},
+                  serialNumber:''
             }
       },
       filters: {
@@ -112,12 +114,18 @@ var vue = new Vue({
 
                   var h = new Date(value).getHours()
                   var mm = new Date(value).getMinutes()
-                  var result = y + "-" + m + '-' + d + " " + h + ':' + mm;
+                  var result = y + "-" + vue.fillZero(m) + '-' + vue.fillZero(d) + " " + vue.fillZero(h) + ':' + vue.fillZero(mm);
                   return result;
             }
       },
 
       methods: {
+            fillZero :function(v){
+                  if(v<10){
+                        v='0'+v;
+                  }
+                  return v;
+            },
             tableRowClassName: function({
                   row,
                   rowIndex
@@ -170,26 +178,31 @@ var vue = new Vue({
             publish: function() {
                   var args = [JSON.stringify(vue.travelInfo)];
                   defaultOptions.listener = function(data) {
-                        console.log(data,'ddddddddddddddddddddddddd')
                         if(data.txhash){
-                                vue.$message({
-                              message: "发布行程需要15秒时间写入区块链,请稍候刷新当前页面进行查看！",
-                              duration: 5000,
-                              showClose: true,
-                              type: "info"
+                              vue.$message({
+                                    message: "发布行程需要15秒时间写入区块链,请稍候刷新当前页面进行查看！",
+                                    duration: 5000,
+                                    showClose: true,
+                                    type: "warning"
                               });
+                              window.location.href="index.html#allList";
+                              console.log("交易号为" + vue.serialNumber, "发布行程交易hash");
+                              // vue.intervalQuery=setInterval(function()   //开启循环：每秒出现一次提示框
+                                // {
+                                //    vue.funcIntervalQuery()
+                                // },5000);
                         }else{
                                vue.$message({
                               message: "已经取消发布行程！",
                               duration: 5000,
                               showClose: true,
                               type: "info"
-                        });
+                              });
                         }
                   };
 
-                  var serialNumber = nebPay.call(config.contractAddr, "0", config.addTravel, JSON.stringify(args), defaultOptions);
-                  console.log("交易号为" + serialNumber, "发布行程交易hash");
+                  vue.serialNumber = nebPay.call(config.contractAddr, "0", config.addTravel, JSON.stringify(args), defaultOptions);
+                  
             },
             //处理list
             handleList: function(respArr) {
@@ -234,6 +247,15 @@ var vue = new Vue({
                   });
             },
             toAttent: function(row) {
+                  if(row.attents.length >= row.count){
+                        this.$message({
+                              showClose: true,
+                              duration: 5000,
+                              message: '此行程参与人数已满！',
+                              type: 'warning'
+                        });
+                        return;
+                  }
                   if (this.curWallet === '') {
                         this.$message({
                               showClose: true,
@@ -260,11 +282,12 @@ var vue = new Vue({
                                           if(data.txhash){
                                                 vue.dialogVisible = false;
                                                 vue.$message({
-                                                      message: "参加行程成功，数据需要15秒时间写入区块链,请稍候刷新页面",
+                                                      message: "参加行程成功，数据需要15秒时间写入区块链,请稍候刷新页面查看结果！",
                                                       duration: 5000,
                                                       showClose: true,
-                                                      type: "info"
+                                                      type: "warning"
                                                 }); 
+                                                 window.location.href="index.html#personal";
                                           }else{
                                                 vue.$message({
                                                       message: "交易已经取消！",
@@ -308,6 +331,25 @@ var vue = new Vue({
                         console.log(vue.allList, "查询个人中心");
                         vue.personalLoading = false;
                   });
+            },
+            funcIntervalQuery:function() {
+                  var defaultOptions ={
+                        callback: "https://pay.nebulas.io/api/mainnet/pay"
+                  }
+                   nebPay.queryPayInfo(vue.serialNumber, defaultOptions) //search transaction result from server (result upload to server by app)
+                              .then(function(resp) {
+                                    console.log(resp,'ddddddddddddd');
+                                    var respObject = JSON.parse(resp)
+                                    console.log(respObject, "获取交易状态返回对象") //resp is a JSON string
+                                    if (respObject.code === 0 && respObject.data.status === 1) { //说明成功写入区块链
+                                          vue.getAll();
+                                          //关闭定时任务
+                                          clearInterval(intervalQuery)
+                                    }
+                              })
+                              .catch(function(err) {
+                                    console.log(err);
+                   });
             }
       }
 });
