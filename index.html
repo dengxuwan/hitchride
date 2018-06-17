@@ -13,11 +13,6 @@
     <link href="./files/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom fonts for this template -->
-    <link href="./files/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="./files/css" rel="stylesheet" type="text/css">
-    <link href="./files/css(1)" rel="stylesheet" type="text/css">
-    <link href="./files/css(2)" rel="stylesheet" type="text/css">
-    <link href="./files/css(3)" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 
     <!-- Custom styles for this template -->
@@ -260,7 +255,7 @@
                 width="100">
                 <template slot-scope="scope">
                   <el-button @click="toDetail(scope.row)" type="text" size="small">查看</el-button>
-                  <el-button type="text" size="small" v-if="!scope.row.isAttent&&!scope.row.status" @click="toAttent(scope.row)">参加</el-button>
+                  <el-button type="text" size="small" v-if="!scope.row.isAttent&&!scope.row.status&&scope.row.current!=scope.row.author" @click="toAttent(scope.row)">参加</el-button>
                 </template>
               </el-table-column>
             </el-table>
