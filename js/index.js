@@ -170,12 +170,25 @@ var vue = new Vue({
             publish: function() {
                   var args = [JSON.stringify(vue.travelInfo)];
                   defaultOptions.listener = function(data) {
-                        vue.$message({
+
+                        try{
+                              var obj = JSON.parse(data);
+                              vue.$message({
                               message: "发布行程需要15秒时间写入区块链,请稍候刷新当前页面进行查看！",
                               duration: 5000,
                               showClose: true,
                               type: "info"
                         });
+                        }catch(e){
+                             vue.$message({
+                              message: "已经取消发布行程！",
+                              duration: 5000,
+                              showClose: true,
+                              type: "info"
+                        });
+                        }
+                        
+                        
                   };
 
                   var serialNumber = nebPay.call(config.contractAddr, "0", config.addTravel, JSON.stringify(args), defaultOptions);
@@ -185,6 +198,7 @@ var vue = new Vue({
             handleList: function(respArr) {
                   for (var i = 0; i < respArr.length; i++) {
                         var obj = respArr[i];
+                        obj['current'] = vue.curWallet;
                         var goTime = obj.goTime;
                         var current = new Date().getTime();
                         if (current > goTime) {
