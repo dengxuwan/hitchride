@@ -257,13 +257,23 @@ var vue = new Vue({
                                     var price = this.clickRow.price;
                                     var args = [this.clickRow.id, name, phone]
                                     defaultOptions.listener = function(data) {
-                                          vue.dialogVisible = false;
-                                          vue.$message({
-                                                message: "参加行程成功，数据需要15秒时间写入区块链,请稍候刷新页面",
-                                                duration: 5000,
-                                                showClose: true,
-                                                type: "info"
-                                          });
+                                          if(data.txhash){
+                                                vue.dialogVisible = false;
+                                                vue.$message({
+                                                      message: "参加行程成功，数据需要15秒时间写入区块链,请稍候刷新页面",
+                                                      duration: 5000,
+                                                      showClose: true,
+                                                      type: "info"
+                                                }); 
+                                          }else{
+                                                vue.$message({
+                                                      message: "交易已经取消！",
+                                                      duration: 5000,
+                                                      showClose: true,
+                                                      type: "info"
+                                                }); 
+                                          }
+                                         
                                     };
                                     var serialNumber = nebPay.call(config.contractAddr, price, config.attention, JSON.stringify(args), defaultOptions);
                                     console.log("交易号为" + serialNumber, "参加行程交易hash");
