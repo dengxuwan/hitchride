@@ -101,8 +101,10 @@ var vue = new Vue({
                         attents: [],
                   },
                   tabPosition: 'left',
-                  timer:{},
-                  serialNumber:''
+                  timer: {},
+                  serialNumber: '',
+                  // 要展开的行，数值的元素是row的key值
+                  expands: []
             }
       },
       filters: {
@@ -114,18 +116,25 @@ var vue = new Vue({
 
                   var h = new Date(value).getHours()
                   var mm = new Date(value).getMinutes()
-                  var result = y + "-" + vue.fillZero(m) + '-' + vue.fillZero(d) + " " + vue.fillZero(h) + ':' + vue.fillZero(mm);
+
+                  if (m < 10) {
+                        m = '0' + m;
+                  }
+                  if (d < 10) {
+                        d = '0' + d;
+                  }
+                  if (mm < 10) {
+                        mm = '0' + mm;
+                  }
+                  if (h < 10) {
+                        h = '0' + h;
+                  }
+                  var result = y + "-" + m + '-' + d + " " + h + ':' + mm;
                   return result;
             }
       },
 
       methods: {
-            fillZero :function(v){
-                  if(v<10){
-                        v='0'+v;
-                  }
-                  return v;
-            },
             tableRowClassName: function({
                   row,
                   rowIndex
@@ -178,31 +187,31 @@ var vue = new Vue({
             publish: function() {
                   var args = [JSON.stringify(vue.travelInfo)];
                   defaultOptions.listener = function(data) {
-                        if(data.txhash){
+                        if (data.txhash) {
                               vue.$message({
                                     message: "发布行程需要15秒时间写入区块链,请稍候刷新当前页面进行查看！",
                                     duration: 5000,
                                     showClose: true,
                                     type: "warning"
                               });
-                              window.location.href="index.html#allList";
+                              window.location.href = "index.html#allList";
                               console.log("交易号为" + vue.serialNumber, "发布行程交易hash");
                               // vue.intervalQuery=setInterval(function()   //开启循环：每秒出现一次提示框
-                                // {
-                                //    vue.funcIntervalQuery()
-                                // },5000);
-                        }else{
-                               vue.$message({
-                              message: "已经取消发布行程！",
-                              duration: 5000,
-                              showClose: true,
-                              type: "info"
+                              // {
+                              //    vue.funcIntervalQuery()
+                              // },5000);
+                        } else {
+                              vue.$message({
+                                    message: "已经取消发布行程！",
+                                    duration: 5000,
+                                    showClose: true,
+                                    type: "info"
                               });
                         }
                   };
 
                   vue.serialNumber = nebPay.call(config.contractAddr, "0", config.addTravel, JSON.stringify(args), defaultOptions);
-                  
+
             },
             //处理list
             handleList: function(respArr) {
@@ -247,7 +256,7 @@ var vue = new Vue({
                   });
             },
             toAttent: function(row) {
-                  if(row.attents.length >= row.count){
+                  if (row.attents.length >= row.count) {
                         this.$message({
                               showClose: true,
                               duration: 5000,
@@ -279,24 +288,24 @@ var vue = new Vue({
                                     var price = this.clickRow.price;
                                     var args = [this.clickRow.id, name, phone]
                                     defaultOptions.listener = function(data) {
-                                          if(data.txhash){
+                                          if (data.txhash) {
                                                 vue.dialogVisible = false;
                                                 vue.$message({
                                                       message: "参加行程成功，数据需要15秒时间写入区块链,请稍候刷新页面查看结果！",
                                                       duration: 5000,
                                                       showClose: true,
                                                       type: "warning"
-                                                }); 
-                                                 window.location.href="index.html#personal";
-                                          }else{
+                                                });
+                                                window.location.href = "index.html#personal";
+                                          } else {
                                                 vue.$message({
                                                       message: "交易已经取消！",
                                                       duration: 5000,
                                                       showClose: true,
                                                       type: "info"
-                                                }); 
+                                                });
                                           }
-                                         
+
                                     };
                                     var serialNumber = nebPay.call(config.contractAddr, price, config.attention, JSON.stringify(args), defaultOptions);
                                     console.log("交易号为" + serialNumber, "参加行程交易hash");
@@ -326,30 +335,36 @@ var vue = new Vue({
                         console.log(resp, "查询个人中心");
                         var obj = JSON.parse(resp.result)
                         vue.myList = vue.handleList(obj.myTravels);
-                        console.log(vue.myList, '111111111111');
+                        for (var i = 0; i < vue.myList.length; i++) {
+                              vue.expands.push(vue.myList.id);
+                        }
                         vue.myAttent = obj.attentsRecords;
                         console.log(vue.allList, "查询个人中心");
                         vue.personalLoading = false;
                   });
+
             },
-            funcIntervalQuery:function() {
-                  var defaultOptions ={
+            funcIntervalQuery: function() {
+                  var defaultOptions = {
                         callback: "https://pay.nebulas.io/api/mainnet/pay"
                   }
-                   nebPay.queryPayInfo(vue.serialNumber, defaultOptions) //search transaction result from server (result upload to server by app)
-                              .then(function(resp) {
-                                    console.log(resp,'ddddddddddddd');
-                                    var respObject = JSON.parse(resp)
-                                    console.log(respObject, "获取交易状态返回对象") //resp is a JSON string
-                                    if (respObject.code === 0 && respObject.data.status === 1) { //说明成功写入区块链
-                                          vue.getAll();
-                                          //关闭定时任务
-                                          clearInterval(intervalQuery)
-                                    }
-                              })
-                              .catch(function(err) {
-                                    console.log(err);
-                   });
+                  nebPay.queryPayInfo(vue.serialNumber, defaultOptions) //search transaction result from server (result upload to server by app)
+                        .then(function(resp) {
+                              console.log(resp, 'ddddddddddddd');
+                              var respObject = JSON.parse(resp)
+                              console.log(respObject, "获取交易状态返回对象") //resp is a JSON string
+                              if (respObject.code === 0 && respObject.data.status === 1) { //说明成功写入区块链
+                                    vue.getAll();
+                                    //关闭定时任务
+                                    clearInterval(intervalQuery)
+                              }
+                        })
+                        .catch(function(err) {
+                              console.log(err);
+                        });
+            },
+            getRowKeys: function(row) {
+                  return row.id;
             }
       }
 });

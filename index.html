@@ -285,8 +285,10 @@
               <el-table 
               v-loading="personalLoading"
               :row-class-name="tableRowClassName"
-              :data="myList">
-               <el-table-column type="expand">
+              :data="myList"
+              :row-key="getRowKeys"
+              :expand-row-keys="expands">
+               <el-table-column type="expand" style="display:block">
                     <template slot-scope="props">
                       <el-form label-position="left" inline class="demo-table-expand">
                         <div v-for="(element,index) in props.row.attents">
