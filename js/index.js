@@ -336,7 +336,8 @@ var vue = new Vue({
                         var obj = JSON.parse(resp.result)
                         vue.myList = vue.handleList(obj.myTravels);
                         for (var i = 0; i < vue.myList.length; i++) {
-                              vue.expands.push(vue.myList.id);
+                              if (vue.myList[i].attents && vue.myList[i].attents.length > 0)
+                                    vue.expands.push(vue.myList[i].id);
                         }
                         vue.myAttent = obj.attentsRecords;
                         console.log(vue.allList, "查询个人中心");
