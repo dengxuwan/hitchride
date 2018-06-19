@@ -4,11 +4,12 @@ var vue = new Vue({
             this.getWallectInfo();
       },
       mounted: function() {
-            this.$message({
+            this.$notify({
                   showClose: true,
                   duration: 5000,
                   message: '温馨提示:使用本站所有功能请安装钱包插件，否则将无法使用发布行程的功能！',
-                  type: 'warning'
+                  type: 'warning',
+                  offset:100
             });
       },
       updated: function() {},
@@ -149,11 +150,12 @@ var vue = new Vue({
             //发布行程
             toPublish: function() {
                   if (this.curWallet === '') {
-                        this.$message({
+                        this.$notify({
                               showClose: true,
                               duration: 0,
                               message: '温馨提示:使用本站所有功能请安装钱包插件，否则将无法使用发布行程的功能！',
-                              type: 'error'
+                              type: 'error',
+                              offset:150
                         });
                         return;
                   }
@@ -188,12 +190,14 @@ var vue = new Vue({
                   var args = [JSON.stringify(vue.travelInfo)];
                   defaultOptions.listener = function(data) {
                         if (data.txhash) {
-                              vue.$message({
+                              vue.$notify({
                                     message: "发布行程需要15秒时间写入区块链,请稍候刷新当前页面进行查看！",
                                     duration: 5000,
                                     showClose: true,
-                                    type: "warning"
+                                    type: "warning",
+                                    offset: 200
                               });
+                               
                               window.location.href = "index.html#allList";
                               console.log("交易号为" + vue.serialNumber, "发布行程交易hash");
                               // vue.intervalQuery=setInterval(function()   //开启循环：每秒出现一次提示框
@@ -201,11 +205,12 @@ var vue = new Vue({
                               //    vue.funcIntervalQuery()
                               // },5000);
                         } else {
-                              vue.$message({
+                              vue.$notify({
                                     message: "已经取消发布行程！",
                                     duration: 5000,
                                     showClose: true,
-                                    type: "info"
+                                    type: "warning",
+                                    offset: 200
                               });
                         }
                   };
@@ -266,11 +271,12 @@ var vue = new Vue({
                         return;
                   }
                   if (this.curWallet === '') {
-                        this.$message({
+                        this.$notify({
                               showClose: true,
                               duration: 0,
                               message: '温馨提示:使用本站所有功能请安装钱包插件，否则将无法使用参与行程的功能！',
-                              type: 'error'
+                              type: 'error',
+                              offset:150
                         });
                         return;
                   }
@@ -290,19 +296,21 @@ var vue = new Vue({
                                     defaultOptions.listener = function(data) {
                                           if (data.txhash) {
                                                 vue.dialogVisible = false;
-                                                vue.$message({
+                                                vue.$notify({
                                                       message: "参加行程成功，数据需要15秒时间写入区块链,请稍候刷新页面查看结果！",
                                                       duration: 5000,
                                                       showClose: true,
-                                                      type: "warning"
+                                                      type: "warning",
+                                                      offset:150
                                                 });
                                                 window.location.href = "index.html#personal";
                                           } else {
-                                                vue.$message({
+                                                vue.$notify({
                                                       message: "交易已经取消！",
                                                       duration: 5000,
                                                       showClose: true,
-                                                      type: "info"
+                                                      type: "info",
+                                                      offset:150
                                                 });
                                           }
 
