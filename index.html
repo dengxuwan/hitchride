@@ -113,43 +113,43 @@
         </div>
         <el-row :gutter="20" class="row_cust">  
           <el-form :model="travelInfo" ref="ruleForm" :label-width="labelWidth" :rules="rules">
-            <el-col :span="10">
+            <el-col :xs="20" :sm="20" :md="15" :lg="15" :xg="15">
               <el-form-item label="姓名:" prop="name">
                 <el-input v-model="travelInfo.name" ></el-input>
                </el-form-item>
             </el-col>
 
-            <el-col :span="10">
+            <el-col :xs="20" :sm="20" :md="10" :lg="10" :xg="10">
               <el-form-item label="联系方式:" prop="phone">
                 <el-input v-model="travelInfo.phone" ></el-input>
                </el-form-item>
             </el-col>
 
-            <el-col :span="10">
+            <el-col :xs="20" :sm="20" :md="10" :lg="10" :xg="10">
               <el-form-item label="出发地点:" prop="fromAddress">
                 <el-input v-model="travelInfo.fromAddress" ></el-input>
                </el-form-item>
             </el-col>
 
-            <el-col :span="10">
+            <el-col :xs="20" :sm="20" :md="10" :lg="10" :xg="10">
               <el-form-item label="目的地:" prop="distination">
                 <el-input v-model="travelInfo.distination" ></el-input>
                </el-form-item>
             </el-col>
 
-            <el-col :span="10">
+            <el-col :xs="20" :sm="20" :md="10" :lg="10" :xg="10">
               <el-form-item label="车型:" prop="type">
                 <el-input v-model="travelInfo.type" ></el-input>
                </el-form-item>
             </el-col>
 
-            <el-col :span="10">
+            <el-col :xs="20" :sm="20" :md="10" :lg="10" :xg="10">
               <el-form-item label="座位数:" prop="count">
                 <el-input v-model="travelInfo.count" type="number"></el-input>
                </el-form-item>
             </el-col>
 
-            <el-col :span="10">
+            <el-col :xs="20" :sm="20" :md="10" :lg="10" :xg="10">
               <el-form-item label="出发时间:" prop="goTime">
                 <el-date-picker
                   v-model="travelInfo.goTime"
@@ -162,12 +162,12 @@
                </el-form-item>
             </el-col>
 
-            <el-col :span="10">
+            <el-col :xs="20" :sm="20" :md="10" :lg="10" :xg="10">
               <el-form-item label="价格:" prop="price">
                 <el-input v-model="travelInfo.price" placeholder="单位Nas" type="number"></el-input>
               </el-form-item>
             </el-col>
-          <el-col :span="14">
+          <el-col :xs="20" :sm="20" :md="20" :lg="20" :xg="20">
             <el-form-item label="备注" prop="remark">
                 <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="travelInfo.remark" placeholder="备注"></el-input>
              </el-form-item>
