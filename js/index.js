@@ -4,13 +4,13 @@ var vue = new Vue({
             this.getWallectInfo();
       },
       mounted: function() {
-            this.$notify({
-                  showClose: true,
-                  duration: 5000,
-                  message: '温馨提示:使用本站所有功能请安装钱包插件，否则将无法使用发布行程的功能！',
-                  type: 'warning',
-                  offset:100
-            });
+            // this.$notify({
+            //       showClose: true,
+            //       duration: 5000,
+            //       message: '温馨提示:使用本站所有功能请安装钱包插件，否则将无法使用发布行程的功能！',
+            //       type: 'warning',
+            //       offset: 100
+            // });
       },
       updated: function() {},
       data() {
@@ -77,6 +77,7 @@ var vue = new Vue({
 
                   },
                   allList: [], //所有行程列表
+                  cloneList: [],
                   myList: [], // 我的行程列表
                   myAttent: [], //我的参与列表
                   labelWidth: '100px', //表单左边label文字宽度
@@ -105,7 +106,12 @@ var vue = new Vue({
                   timer: {},
                   serialNumber: '',
                   // 要展开的行，数值的元素是row的key值
-                  expands: []
+                  expands: [],
+                  search: {
+                        from: '',
+                        to: '',
+                        status: '',
+                  }
             }
       },
       filters: {
@@ -155,7 +161,7 @@ var vue = new Vue({
                               duration: 0,
                               message: '温馨提示:使用本站所有功能请安装钱包插件，否则将无法使用发布行程的功能！',
                               type: 'error',
-                              offset:150
+                              offset: 150
                         });
                         return;
                   }
@@ -181,7 +187,6 @@ var vue = new Vue({
                               if (e.data.data.account) {
                                     vue.curWallet = e.data.data.account;
                                     vue.getAll();
-                                    vue.personal();
                               }
                         }
                   });
@@ -197,7 +202,7 @@ var vue = new Vue({
                                     type: "warning",
                                     offset: 200
                               });
-                               
+
                               window.location.href = "index.html#allList";
                               console.log("交易号为" + vue.serialNumber, "发布行程交易hash");
                               // vue.intervalQuery=setInterval(function()   //开启循环：每秒出现一次提示框
@@ -227,8 +232,10 @@ var vue = new Vue({
                         var current = new Date().getTime();
                         if (current > goTime) {
                               obj['status'] = true;
+                              obj['statusStr'] = '已过期';
                         } else {
                               obj['status'] = false;
+                              obj['statusStr'] = '进行中';
                         }
 
                         var attents = obj.attents;
@@ -238,6 +245,9 @@ var vue = new Vue({
                               if (attentInfo.address === vue.curWallet) {
                                     isAttent = true;
                               }
+                        }
+                        if (isAttent) {
+                              obj['statusStr'] = '已参加';
                         }
                         obj['isAttent'] = isAttent;
                   }
@@ -255,7 +265,8 @@ var vue = new Vue({
                   query(address, config.getAll, "", function(resp) {
                         console.log(resp, "查询所有列表");
                         var respArr = JSON.parse(resp.result)
-                        vue.allList = vue.handleList(respArr);;
+                        vue.allList = vue.handleList(respArr);
+                        vue.cloneList = vue.allList;
                         console.log(vue.allList, "查询所有列表");
                         vue.allListLoading = false;
                   });
@@ -276,7 +287,7 @@ var vue = new Vue({
                               duration: 0,
                               message: '温馨提示:使用本站所有功能请安装钱包插件，否则将无法使用参与行程的功能！',
                               type: 'error',
-                              offset:150
+                              offset: 150
                         });
                         return;
                   }
@@ -301,7 +312,7 @@ var vue = new Vue({
                                                       duration: 5000,
                                                       showClose: true,
                                                       type: "warning",
-                                                      offset:150
+                                                      offset: 150
                                                 });
                                                 window.location.href = "index.html#personal";
                                           } else {
@@ -310,7 +321,7 @@ var vue = new Vue({
                                                       duration: 5000,
                                                       showClose: true,
                                                       type: "info",
-                                                      offset:150
+                                                      offset: 150
                                                 });
                                           }
 
@@ -329,29 +340,7 @@ var vue = new Vue({
                   // row.price = row.price + "nas";
                   // row.count = row.count + "个";
                   this.detailRow = row;
-                  console.log(this.detailRow, 'dddddddddddddddddddddd');
                   $("#portfolioModal1").modal("show");
-            },
-            //查询个人中心需要的数据
-            personal: function() {
-                  if (!this.curWallet || this.curWallet === '') {
-                        address = config.myAddress;
-                  } else {
-                        address = this.curWallet;
-                  }
-                  query(address, config.personal, "", function(resp) {
-                        console.log(resp, "查询个人中心");
-                        var obj = JSON.parse(resp.result)
-                        vue.myList = vue.handleList(obj.myTravels);
-                        for (var i = 0; i < vue.myList.length; i++) {
-                              if (vue.myList[i].attents && vue.myList[i].attents.length > 0)
-                                    vue.expands.push(vue.myList[i].id);
-                        }
-                        vue.myAttent = obj.attentsRecords;
-                        console.log(vue.allList, "查询个人中心");
-                        vue.personalLoading = false;
-                  });
-
             },
             funcIntervalQuery: function() {
                   var defaultOptions = {
@@ -359,7 +348,6 @@ var vue = new Vue({
                   }
                   nebPay.queryPayInfo(vue.serialNumber, defaultOptions) //search transaction result from server (result upload to server by app)
                         .then(function(resp) {
-                              console.log(resp, 'ddddddddddddd');
                               var respObject = JSON.parse(resp)
                               console.log(respObject, "获取交易状态返回对象") //resp is a JSON string
                               if (respObject.code === 0 && respObject.data.status === 1) { //说明成功写入区块链
@@ -374,6 +362,42 @@ var vue = new Vue({
             },
             getRowKeys: function(row) {
                   return row.id;
+            },
+            toSearch: function() {
+                  vue.allListLoading = true;
+                  var list = [];
+                  for (var i = 0; i < this.cloneList.length; i++) {
+                        var obj = vue.cloneList[i];
+                        var from = obj.fromAddress;
+                        var to = obj.distination;
+                        var status = obj.statusStr;
+                        var isFrom = false;
+                        var isTo = false;
+                        var isStatus = false;
+                        if (this.search.from !== '' && this.search.to === '') {
+                              if (from.indexOf(this.search.from) !== -1 && status.indexOf(this.search.status) !== -1) {
+                                    list.push(obj);
+                              }
+                        } else if (this.search.from === '' && this.search.to !== '') {
+                              if (to.indexOf(this.search.to) !== -1 && status.indexOf(this.search.status) !== -1) {
+                                    list.push(obj);
+                              }
+                        } else if (this.search.from === '' && this.search.to === '') {
+                              if (status.indexOf(this.search.status) !== -1) {
+                                    list.push(obj);
+                              }
+                        } else if (this.search.from !== '' && this.search.to !== '') {
+                              if (from.indexOf(this.search.from) !== -1 && to.indexOf(this.search.to) !== -1 && status.indexOf(this.search.status) !== -1) {
+                                    list.push(obj);
+                              }
+                        } else if (this.search.from === '' && this.search.to !== '') {
+                              if (to.indexOf(this.search.to) !== -1 && status.indexOf(this.search.status) !== -1) {
+                                    list.push(obj);
+                              }
+                        }
+                  }
+                  vue.allList = list;
+                  vue.allListLoading = false;
             }
       }
 });
