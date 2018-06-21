@@ -405,6 +405,9 @@
                   <p>已参加人数:
                       <span>{{detailRow.attents.length}}</span>
                   </p>
+                  <p>备注:
+                      <span>{{detailRow.remark}}</span>
+                  </p>
                   <p>乘客信息:
                       <p v-if="detailRow.attents.length==0">暂无乘客</p>
                       <p v-else v-for="(item, index) in detailRow.attents">
