@@ -207,7 +207,7 @@ var vue = new Vue({
                         if (data.txhash) {
                               vue.$notify({
                                     message: "发布行程需要15秒时间写入区块链,写入成功之后会自动提醒您！",
-                                    duration: 5000,
+                                    duration: 15000,
                                     showClose: true,
                                     type: "warning",
                                     offset: 200
@@ -335,9 +335,9 @@ var vue = new Vue({
                                                 vue.dialogVisible = false;
                                                 vue.$notify({
                                                       message: "参加行程成功，数据需要15秒时间写入区块链,请等待系统自动通知！",
-                                                      duration: 5000,
+                                                      duration: 15000,
                                                       showClose: true,
-                                                      type: "warning",
+                                                      type: "info",
                                                       offset: 150
                                                 });
                                                 var neburl = "https://mainnet.nebulas.io";
