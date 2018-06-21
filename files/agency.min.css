@@ -896,4 +896,7 @@ tbody {
 	.indexTable1{
 		display:block;
 	}
+	.modal-body p span{
+		font-size: 0.8rem;
+	}
 }
