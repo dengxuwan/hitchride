@@ -22,14 +22,13 @@ a:hover {
 .text-primary {
 	color: #fed136!important
 }
-
 h1,h2,h3,h4,h5,h6 {
 	font-weight: 700;
 	font-family: Montserrat,'Helvetica Neue',Helvetica,Arial,sans-serif
 }
 
 section {
-	padding: 100px 0
+	padding: 70px 0
 }
 
 section h2.section-heading {
@@ -49,7 +48,7 @@ section h3.section-subheading {
 
 @media (min-width:768px) {
 	section {
-		padding: 150px 0
+		padding: 70px 0
 	}
 }
 
@@ -134,6 +133,18 @@ img::-moz-selection {
 }
 
 @media (min-width:992px) {
+	.centerTable{
+		display: block;
+	}
+	.centerTable1{
+		display: none;
+	}
+	.indexTable{
+		display:block;
+	}
+	.indexTable1{
+		display:none;
+	}
 	#mainNav {
 		padding-top: 25px;
 		padding-bottom: 25px;
@@ -207,6 +218,18 @@ header.masthead .intro-text .intro-heading {
 }
 
 @media (min-width:768px) {
+	.centerTable{
+		display: none;
+	}
+	.centerTable1{
+		display: block;
+	}
+	.indexTable{
+		display:none;
+	}
+	.indexTable1{
+		display:block;
+	}
 	header.masthead .intro-text {
 		padding-top: 300px;
 		padding-bottom: 200px
@@ -310,8 +333,19 @@ header.masthead .intro-text .intro-heading {
 }
 
 @media (min-width:767px) {
-	#portfolio .portfolio-item {
+	.centerTable{
+		display: none;
+	}
+	.centerTable1{
+		display: block;
+	}ortfolio .portfolio-item {
 		margin: 0 0 30px
+	}
+	.indexTable{
+		display:none;
+	}
+	.indexTable1{
+		display:block;
 	}
 }
 
@@ -502,6 +536,18 @@ header.masthead .intro-text .intro-heading {
 }
 
 @media (min-width:768px) {
+	.centerTable{
+		display: none;
+	}
+	.centerTable1{
+		display: block;
+	}
+	.indexTable{
+		display:block;
+	}
+	.indexTable1{
+		display:none;
+	}
 	.timeline:before {
 		left: 50%
 	}
@@ -542,6 +588,18 @@ header.masthead .intro-text .intro-heading {
 }
 
 @media (min-width:992px) {
+	.centerTable{
+		display: block;
+	}
+	.centerTable1{
+		display: none;
+	}
+		.indexTable{
+		display:block;
+	}
+	.indexTable1{
+		display:none;
+	}
 	.modal-content{
 		width:30%!important;
 		left:18%!important;
@@ -576,6 +634,18 @@ header.masthead .intro-text .intro-heading {
 }
 
 @media (min-width:1200px) {
+	.centerTable{
+		display: block;
+	}
+	.centerTable1{
+		display: none;
+	}
+	.indexTable{
+		display:block;
+	}
+	.indexTable1{
+		display:none;
+	}
 	.modal-content{
 		width:50%!important;
 		left:22%!important;
@@ -811,4 +881,19 @@ tbody {
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-all;
+}
+
+@media screen and (min-width:300px) and (max-width:700px) {
+   .centerTable{
+		display: none;
+	}
+	.centerTable1{
+		display: block;
+	}
+	.indexTable{
+		display:none;
+	}
+	.indexTable1{
+		display:block;
+	}
 }

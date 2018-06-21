@@ -187,7 +187,7 @@
             <h3 class="section-subheading text-muted">乘客选择行程，支付NAS进行搭乘</h3>
           </div>
         </div>
-        <div class="row">
+        <div class="row indexTable">
           <div class="next-table only-bottom-border basic-table col-md-18">
             <div class="next-table-inner">
             <el-form :inline="true" :model="search" class="demo-form-inline">
@@ -275,6 +275,68 @@
             </el-table>
             </div>
           </div>
+        </div>
+
+
+        <div class="row indexTable1">
+          <div class="next-table only-bottom-border basic-table col-md-18">
+            <div class="next-table-inner text-center">
+            <el-form :inline="true" :model="search" class="demo-form-inline">
+              <el-form-item label="出发地点">
+                <el-input v-model="search.from" placeholder="模糊查询"></el-input>
+              </el-form-item>
+              <el-form-item label="目的地点">
+                <el-input v-model="search.to" placeholder="模糊查询"></el-input>
+              </el-form-item>
+              <el-form-item label="行程状态">
+                <el-select v-model="search.status" placeholder="全部">
+                  <el-option label="进行中" value="进行中"></el-option>
+                  <el-option label="已过期" value="已过期"></el-option>
+                  <el-option label="已参加" value="已参加"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="toSearch">查询</el-button>
+              </el-form-item>
+            </el-form>
+            <el-table 
+              v-loading="allListLoading"
+              :data="allList"
+              :row-class-name="tableRowClassName">
+              <el-table-column
+                prop="fromAddress"
+                label="列表"
+                align="left"
+                width="200">
+                 <template slot-scope="scope">
+                    <p>出发地:{{scope.row.fromAddress}}<p>
+                    <p>目的地:{{scope.row.distination}}<p>
+                    <p>出发时间:{{scope.row.goTime | getDateTimeStr}}<p>
+                    <p>费用:{{scope.row.price+'nas'}}<p>
+                    <p>座位数:{{scope.row.count+'个'}}<p>
+                    <p>已有乘客:{{scope.row.attents.length+'人'}}<p>
+                    <p>状态:
+                        <span v-if="scope.row.isAttent" style="color:#E6A23C">已参加</span>
+                        <span v-else-if="scope.row.status">已过期</span>
+                        <span v-else-if="!scope.row.status">进行中</span>
+                    <p>         
+                </template>
+              </el-table-column>
+              
+              <el-table-column
+                fixed="right"
+                label="操作"
+                align="center">
+                <template slot-scope="scope">
+                  <el-button @click="toDetail(scope.row)" type="text" size="small">详情</el-button>
+                  <el-button type="text" size="small" v-if="!scope.row.isAttent&&!scope.row.status&&scope.row.current!=scope.row.author" @click="toAttent(scope.row)">搭乘</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+
+            
+            </div>
+          </div>
 
         </div>
       </div>
@@ -328,7 +390,7 @@
     <el-dialog
       title="信息录入"
       :visible.sync="dialogVisible"
-      width="30%">
+      width="400px">
       <div>
         <el-row class="row_cust">  
               <el-form :model="attentInfo" ref="ruleForm1" :rules="attentRule">

@@ -66,7 +66,16 @@
 
 
     <section id="personal">
+
       <div class="container">
+        <div class="row" style="margin-bottom:30px; ">
+              <el-alert v-if="isShow"
+                :title="infoTitle"
+                :type="infoType"
+                center
+                show-icon>
+              </el-alert>  
+        </div>
         <div class="row">
           <div class="col-lg-12 text-center">
             <h3 class="section-heading text-uppercase">个人中心</h3>
@@ -74,10 +83,10 @@
           </div>
         </div>
 
-      <div class="row clearfix">
+      <div class="row clearfix centerTable">
 
-        <div class="col-md-16 column">
-          <el-tabs type="border-card" :tab-position="tabPosition">
+        <div class="col-md-20 column">
+          <el-tabs type="card" tab-position="tabPosition">
             <el-tab-pane label="我发布的行程">
               
               <el-table 
@@ -150,7 +159,6 @@
                 </template>
               </el-table-column>
                <el-table-column
-                 fixed="right"
                 label="操作"
                 align="center"
                 width="100">
@@ -225,6 +233,99 @@
                 <template slot-scope="scope">
                   <el-button @click="toDetail(scope.row)" type="text" size="small">详情</el-button>
                 </template>
+              </el-table-column>
+            </el-table>
+
+            </el-tab-pane>
+          </el-tabs>
+        </div>
+      </div>
+
+
+
+
+      <div class="row clearfix centerTable1">
+        <div class="col-md-20 column">
+          <el-tabs type="card" :tab-position="tabPosition">
+            <el-tab-pane label="我发布的行程">
+              
+              <el-table 
+              v-loading="personalLoading"
+              :data="myList"
+              :row-key="getRowKeys"
+              :expand-row-keys="expands">
+               <el-table-column type="expand" style="display:block">
+                    <template slot-scope="props">
+                      <el-form label-position="left" inline class="demo-table-expand">
+                        <div v-for="(element,index) in props.row.attents">
+                          <el-form-item label="乘客姓名">
+                            <span>{{ element.name }}</span>
+                          </el-form-item>
+                          <el-form-item label="乘客联系方式">
+                            <span>{{ element.phone }}</span>
+                          </el-form-item>
+                        </div>
+                      </el-form>
+                    </template>
+              </el-table-column>
+              <el-table-column
+                prop="distination"
+                width="200"
+                label="">
+                  <template slot-scope="scope">
+                    <p>出发地:{{scope.row.fromAddress}}<p>
+                    <p>目的地:{{scope.row.distination}}<p>
+                    <p>出发时间:{{scope.row.goTime | getDateTimeStr}}<p>
+                    <p>费用:{{scope.row.price+'nas'}}<p>
+                    <p>座位数:{{scope.row.count+'个'}}<p>
+                    <p>已有乘客:{{scope.row.attents.length+'人'}}<p>
+                    <p>状态:
+                        <span v-if="scope.row.isAttent" style="color:#E6A23C">已参加</span>
+                        <span v-else-if="scope.row.status">已过期</span>
+                        <span v-else-if="!scope.row.status">进行中</span>
+                    <p>
+                    <p> <el-button @click="toDetail(scope.row)" type="text" size="small">详情</el-button><p>
+                    
+                </template>
+              </el-table-column>
+               <el-table-column
+                prop=""
+                label=""
+                width="200">
+              </el-table-column>
+            </el-table>
+
+            </el-tab-pane>
+            <el-tab-pane label="我参与的行程">
+              <el-table 
+              v-loading="personalLoading"
+              :row-class-name="tableRowClassName"
+              :data="myAttent">
+              
+              <el-table-column
+                prop="distination"
+                width="200"
+                label="">
+                  <template slot-scope="scope">
+                    <p>出发地:{{scope.row.fromAddress}}<p>
+                    <p>目的地:{{scope.row.distination}}<p>
+                    <p>出发时间:{{scope.row.goTime | getDateTimeStr}}<p>
+                    <p>费用:{{scope.row.price+'nas'}}<p>
+                    <p>座位数:{{scope.row.count+'个'}}<p>
+                    <p>已有乘客:{{scope.row.attents.length+'人'}}<p>
+                    <p>状态:
+                        <span v-if="scope.row.isAttent" style="color:#E6A23C">已参加</span>
+                        <span v-else-if="scope.row.status">已过期</span>
+                        <span v-else-if="!scope.row.status">进行中</span>
+                    <p>
+                    <p> <el-button @click="toDetail(scope.row)" type="text" size="small">详情</el-button><p>
+                    
+                </template>
+              </el-table-column>
+               <el-table-column
+                prop=""
+                label=""
+                width="200">
               </el-table-column>
             </el-table>
 

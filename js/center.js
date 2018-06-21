@@ -35,12 +35,15 @@ var vue = new Vue({
                         goTime: '',
                         attents: [],
                   },
-                  tabPosition: 'left',
+                  tabPosition: 'top',
                   timer: {},
                   serialNumber: '',
                   // 要展开的行，数值的元素是row的key值
                   expands: [],
-                  isShow: false
+                  isShow: false,
+                  infoTitle:"",
+                  infoType:"success",
+                  count:0
             }
       },
       filters: {
@@ -133,10 +136,17 @@ var vue = new Vue({
             },
             //查询个人中心需要的数据
             personal: function() {
+                  this.isShow = true;
+                  var address ="";
                   if (!this.curWallet || this.curWallet === '') {
-                        address = config.myAddress;
+                        this.infoTitle = "请安装钱包插件!详情请点击使用方法";
+                        this.infoType="warning";
+                        vue.personalLoading = false;
+                        return;
                   } else {
                         address = this.curWallet;
+                        this.infoTitle = "钱包地址:"+address;
+                        this.infoType="success";
                   }
                   query(address, config.personal, "", function(resp) {
                         console.log(resp, "查询个人中心");
@@ -157,7 +167,6 @@ var vue = new Vue({
                   }
                   nebPay.queryPayInfo(vue.serialNumber, defaultOptions) //search transaction result from server (result upload to server by app)
                         .then(function(resp) {
-                              console.log(resp, 'ddddddddddddd');
                               var respObject = JSON.parse(resp)
                               console.log(respObject, "获取交易状态返回对象") //resp is a JSON string
                               if (respObject.code === 0 && respObject.data.status === 1) { //说明成功写入区块链
