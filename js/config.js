@@ -40,6 +40,13 @@ var defaultOptions = {
 		showQRCode: false, //是否显示二维码信息
 		container: undefined //指定显示二维码的canvas容器，不指定则生成一个默认canvas
 	},
+	mobile: {
+		showInstallTip: true, //是否支持手机钱包安装提示
+		installTip: undefined // 手机钱包安装提示
+	},
+	extension: {
+		openExtension: true //是否支持插件调用
+	},
 	// callback 是记录交易返回信息的交易查询服务器地址，不指定则使用默认地址
 	callback: undefined,
 	// listener: 指定一个listener函数来处理交易返回信息（仅用于浏览器插件，App钱包不支持listener）
