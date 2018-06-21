@@ -308,6 +308,14 @@ hitchRideContract.prototype = {
 		if ((value.div(this._wei)).toString() !== travelInfo.price) {
 			throw new Error("Error amount");
 		}
+		if (travelInfo.attents && travelInfo.attents.length > 0) {
+			for (var i = 0; i < travelInfo.attents.length; i++) {
+				var attentInfo = travelInfo.attents[i];
+				if (attentInfo.address === from) {
+					throw new Error('isRepeat');
+				}
+			}
+		}
 		var result = Blockchain.transfer(travelInfo.author, value);
 		if (!result) {
 			throw new Error("fail transfer");

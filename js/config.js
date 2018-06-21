@@ -2,7 +2,7 @@
 
 
 var nebulas = require("nebulas"),
- 	Account = nebulas.Account,
+	Account = nebulas.Account,
 	neb = new nebulas.Neb(),
 	api = neb.api,
 	nonce = 0;
@@ -12,7 +12,7 @@ var nebPay = new NebPay();
 var config = {
 	chainId: 1,
 	apiPrefix: "https://mainnet.nebulas.io", //https://testnet.nebulas.io  https://mainnet.nebulas.io
-	contractAddr: "n1oSLqoHQzegc4ytt4N7ES8YL5VnpvBRvaV", //main n1zsohpv63CnmUs7aeVBfgeQBozpK5bmTMk test n21iah7tXxgxTZ6R81n9UuWGwULcuVansBd
+	contractAddr: "n1zWB6bPuqzfHhTyoBQbjW8BX88uU8wRsCk", //main n1zsohpv63CnmUs7aeVBfgeQBozpK5bmTMk test n21iah7tXxgxTZ6R81n9UuWGwULcuVansBd
 	myAddress: Account.NewAccount().getAddressString(),
 	gaslimit: 2000000,
 	gasprice: 1000000,
