@@ -145,7 +145,7 @@ var vue = new Vue({
                         return;
                   } else {
                         address = this.curWallet;
-                        this.infoTitle = "钱包地址:"+address;
+                        this.infoTitle = "钱包地址:" + address;
                         this.infoType="success";
                   }
                   query(address, config.personal, "", function(resp) {
