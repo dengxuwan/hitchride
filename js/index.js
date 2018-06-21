@@ -82,7 +82,7 @@ var vue = new Vue({
                         price: [{
                               trigger: 'change',
                               required: true,
-                              message: "请填写联系方式"
+                              message: "请填写拼车费用（nas）"
                         }],
 
                   },
