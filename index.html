@@ -625,3 +625,27 @@
     border: 1px solid #eeeff3;
 }
       </style>
+      <script type="text/javascript">
+        
+        function cbPush(resp) {
+          console.log(3);
+          console.log(resp,'2222222222222')
+          // if (JSON.stringify(resp) === "\"Error: Transaction rejected by user\"") alert("您拒绝了交易,请刷新页面");
+          // var neburl = "https://mainnet.nebulas.io";
+          // var txhash = resp.txhash;
+          // // console.log(txhash);
+          // intervalQuery = setInterval(() => {
+          //     //console.log('wait');
+          //     axios.post(neburl + "/v1/user/getTransactionReceipt", { hash: txhash })
+          //         .then(d => {
+          //             if (d.data && d.data.result.execute_result !== "") {
+          //                 // success
+          //                 clearInterval(intervalQuery);
+          //             } else if (d.data.status === 0) {
+          //                 alert("上传失败，请刷新页面并重试");
+          //                 clearInterval(intervalQuery);
+          //             }
+          //         });
+          // });
+      }
+      </script>

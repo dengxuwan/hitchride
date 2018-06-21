@@ -1,10 +1,19 @@
 "use strict";
 
+
+var nebulas = require("nebulas"),
+ 	Account = nebulas.Account,
+	neb = new nebulas.Neb(),
+	api = neb.api,
+	nonce = 0;
+
+var NebPay = require("nebpay");
+var nebPay = new NebPay();
 var config = {
 	chainId: 1,
 	apiPrefix: "https://mainnet.nebulas.io", //https://testnet.nebulas.io  https://mainnet.nebulas.io
 	contractAddr: "n1oSLqoHQzegc4ytt4N7ES8YL5VnpvBRvaV", //main n1zsohpv63CnmUs7aeVBfgeQBozpK5bmTMk test n21iah7tXxgxTZ6R81n9UuWGwULcuVansBd
-	myAddress: "n1JeDTMq5xHq6Y16yApYbMdT4Vw4K9kzbK9",
+	myAddress: Account.NewAccount().getAddressString(),
 	gaslimit: 2000000,
 	gasprice: 1000000,
 	transfer: "transfer",
@@ -18,13 +27,7 @@ var config = {
 	search: "search",
 	checkTxhash: "https://explorer.nebulas.io/#/tx/"
 };
-var nebulas = require("nebulas"),
-	neb = new nebulas.Neb(),
-	api = neb.api,
-	nonce = 0;
 neb.setRequest(new nebulas.HttpRequest(config.apiPrefix));
-var NebPay = require("nebpay");
-var nebPay = new NebPay();
 var serialNumber;
 var defaultOptions = {
 	goods: { //Dapp端对当前交易商品的描述信息，app暂时不展示
@@ -49,28 +52,22 @@ function query(curWallet, method, args, callback) {
 	if (typeof method != "undefined") {
 		try {
 			neb.setRequest(new nebulas.HttpRequest(config.apiPrefix));
-			neb.api.getAccountState(curWallet).then(function(resp) {
-				nonce = parseInt(resp.nonce || 0) + 1;
-				neb.api.call({
-					from: curWallet,
-					to: config.contractAddr,
-					value: 0,
-					nonce: nonce,
-					gasPrice: config.gasprice,
-					gasLimit: config.gaslimit,
-					contract: {
-						"function": method,
-						"args": args
-					}
-				}).then(function(resp) {
-					callback(resp);
-				}).catch(function(err) {
-					callback(err);
-					console.log(err);
-				});
-			}).catch(function(e) {
-				callback(e);
-				console.log(e);
+			neb.api.call({
+				from: curWallet,
+				to: config.contractAddr,
+				value: 0,
+				nonce: "0",
+				gasPrice: config.gasprice,
+				gasLimit: config.gaslimit,
+				contract: {
+					"function": method,
+					"args": args
+				}
+			}).then(function(resp) {
+				callback(resp);
+			}).catch(function(err) {
+				callback(err);
+				console.log(err);
 			});
 		} catch (e) {
 			callback(e);

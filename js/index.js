@@ -1,7 +1,7 @@
 var vue = new Vue({
       el: '#app',
       created: function() {
-            this.getWallectInfo();
+            this.getAll();
       },
       mounted: function() {
             // this.$notify({
@@ -186,7 +186,7 @@ var vue = new Vue({
                         if (e.data && e.data.data) {
                               if (e.data.data.account) {
                                     vue.curWallet = e.data.data.account;
-                                    vue.getAll();
+                                    // vue.getAll();
                               }
                         }
                   });
@@ -281,16 +281,16 @@ var vue = new Vue({
                         });
                         return;
                   }
-                  if (this.curWallet === '') {
-                        this.$notify({
-                              showClose: true,
-                              duration: 0,
-                              message: '温馨提示:使用本站所有功能请安装钱包插件，否则将无法使用参与行程的功能！',
-                              type: 'error',
-                              offset: 150
-                        });
-                        return;
-                  }
+                  // if (this.curWallet === '') {
+                  //       this.$notify({
+                  //             showClose: true,
+                  //             duration: 0,
+                  //             message: '温馨提示:使用本站所有功能请安装钱包插件，否则将无法使用参与行程的功能！',
+                  //             type: 'error',
+                  //             offset: 150
+                  //       });
+                  //       return;
+                  // }
                   this.attentInfo.name = "";
                   this.attentInfo.phone = "";
                   this.clickRow = row;
@@ -300,11 +300,13 @@ var vue = new Vue({
                   this.$refs['ruleForm1'].validate((valid) => {
                         if (valid) {
                               if (this.clickRow) {
+                                     console.log(0);
                                     var name = this.attentInfo.name;
                                     var phone = this.attentInfo.phone;
                                     var price = this.clickRow.price;
                                     var args = [this.clickRow.id, name, phone]
                                     defaultOptions.listener = function(data) {
+                                          console.log(3);
                                           if (data.txhash) {
                                                 vue.dialogVisible = false;
                                                 vue.$notify({
@@ -326,7 +328,9 @@ var vue = new Vue({
                                           }
 
                                     };
+                                     console.log(1);
                                     var serialNumber = nebPay.call(config.contractAddr, price, config.attention, JSON.stringify(args), defaultOptions);
+                                     console.log(2);
                                     console.log("交易号为" + serialNumber, "参加行程交易hash");
                               }
                         } else {
