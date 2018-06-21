@@ -2,13 +2,13 @@ var vue = new Vue({
       el: '#app',
       created: function() {
             if (!window.webExtensionWallet) {
-                this.$notify({
-                   showClose: true,
-                   duration: 5000,
-                   message: '温馨提示:使用本站所有功能请安装钱包插件，否则将无法正常使用本站功能！',
-                   type: 'warning',
-                   offset: 100
-             });
+                  this.$notify({
+                        showClose: true,
+                        duration: 5000,
+                        message: '温馨提示:使用本站所有功能请安装钱包插件，否则将无法正常使用本站功能！',
+                        type: 'warning',
+                        offset: 100
+                  });
             }
             this.getAll();
       },
@@ -205,19 +205,42 @@ var vue = new Vue({
                   defaultOptions.listener = function(data) {
                         if (data.txhash) {
                               vue.$notify({
-                                    message: "发布行程需要15秒时间写入区块链,请稍候刷新当前页面进行查看！",
+                                    message: "发布行程需要15秒时间写入区块链,写入成功之后会自动提醒您！",
                                     duration: 5000,
                                     showClose: true,
                                     type: "warning",
                                     offset: 200
                               });
 
-                              window.location.href = "index.html#allList";
+
                               console.log("交易号为" + vue.serialNumber, "发布行程交易hash");
-                              // vue.intervalQuery=setInterval(function()   //开启循环：每秒出现一次提示框
-                              // {
-                              //    vue.funcIntervalQuery()
-                              // },5000);
+                              var neburl = "https://mainnet.nebulas.io";
+                              var txhash = data.txhash;
+                              intervalQuery = setInterval(() => {
+                                    console.log('wait......');
+                                    axios.post(neburl + "/v1/user/getTransactionReceipt", {
+                                                hash: txhash
+                                          })
+                                          .then(d => {
+                                                if (d.data && d.data.result.execute_result !== "") {
+                                                      vue.$confirm('行程已经成功写入区块链, 点击查看?', '成功', {
+                                                            confirmButtonText: '查看',
+                                                            cancelButtonText: '取消',
+                                                            type: 'success'
+                                                      }).then(() => {
+                                                            window.location.href = "index.html#allListTable";
+                                                            vue.getAll();
+                                                      }).catch(() => {
+
+                                                      });
+                                                      // success
+                                                      clearInterval(intervalQuery);
+                                                } else if (d.data.status === 0) {
+                                                      alert("分享失败，请刷新页面并重试");
+                                                      clearInterval(intervalQuery);
+                                                }
+                                          });
+                              }, 6000);
                         } else {
                               vue.$notify({
                                     message: "已经取消发布行程！",
@@ -290,16 +313,6 @@ var vue = new Vue({
                         });
                         return;
                   }
-                  // if (this.curWallet === '') {
-                  //       this.$notify({
-                  //             showClose: true,
-                  //             duration: 0,
-                  //             message: '温馨提示:使用本站所有功能请安装钱包插件，否则将无法使用参与行程的功能！',
-                  //             type: 'error',
-                  //             offset: 150
-                  //       });
-                  //       return;
-                  // }
                   this.attentInfo.name = "";
                   this.attentInfo.phone = "";
                   this.clickRow = row;
@@ -324,23 +337,34 @@ var vue = new Vue({
                                                       type: "warning",
                                                       offset: 150
                                                 });
-                                                window.location.href = "index.html#personal";
-                                                 var neburl = "https://mainnet.nebulas.io";
-                                                var txhash = resp.txhash;
-                                                // console.log(txhash);
-                                                // intervalQuery = setInterval(() => {
-                                                //     //console.log('wait');
-                                                //     axios.post(neburl + "/v1/user/getTransactionReceipt", { hash: txhash })
-                                                //         .then(d => {
-                                                //             if (d.data && d.data.result.execute_result !== "") {
-                                                //                 // success
-                                                //                 clearInterval(intervalQuery);
-                                                //             } else if (d.data.status === 0) {
-                                                //                 alert("上传失败，请刷新页面并重试");
-                                                //                 clearInterval(intervalQuery);
-                                                //             }
-                                                //         });
-                                                // });
+                                                window.location.href = "center.html#personal";
+                                                var neburl = "https://mainnet.nebulas.io";
+                                                var txhash = data.txhash;
+                                                intervalQuery = setInterval(() => {
+                                                      console.log('wait......');
+                                                      axios.post(neburl + "/v1/user/getTransactionReceipt", {
+                                                                  hash: txhash
+                                                            })
+                                                            .then(d => {
+                                                                  if (d.data && d.data.result.execute_result !== "") {
+                                                                        vue.$confirm('数据已经成功写入区块链点击查看', '成功', {
+                                                                              confirmButtonText: '查看',
+                                                                              cancelButtonText: '取消',
+                                                                              type: 'success'
+                                                                        }).then(() => {
+                                                                              window.location.href = "center.html#personal";
+                                                                              vue.getAll();
+                                                                        }).catch(() => {
+
+                                                                        });
+                                                                        // success
+                                                                        clearInterval(intervalQuery);
+                                                                  } else if (d.data.status === 0) {
+                                                                        alert("写入失败，请刷新页面并重试");
+                                                                        clearInterval(intervalQuery);
+                                                                  }
+                                                            });
+                                                }, 6000);
                                           } else {
                                                 vue.$notify({
                                                       message: "交易已经取消！",
