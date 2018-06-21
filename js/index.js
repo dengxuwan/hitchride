@@ -10,20 +10,16 @@ var vue = new Vue({
                         offset: 100
                   });
             }
+            this.getWallectInfo();
             this.getAll();
       },
       mounted: function() {
-            // this.$notify({
-            //       showClose: true,
-            //       duration: 5000,
-            //       message: '温馨提示:使用本站所有功能请安装钱包插件，否则将无法使用发布行程的功能！',
-            //       type: 'warning',
-            //       offset: 100
-            // });
+
       },
       updated: function() {},
       data() {
             return {
+                  tempVar: true,
                   travelInfo: {
                         name: '',
                         phone: '',
@@ -57,6 +53,11 @@ var vue = new Vue({
                               trigger: 'change',
                               required: true,
                               message: "请填写联系方式"
+                        }],
+                        type: [{
+                              trigger: 'change',
+                              required: true,
+                              message: "请填写成辆型号"
                         }],
                         fromAddress: [{
                               trigger: 'change',
@@ -270,6 +271,7 @@ var vue = new Vue({
                               obj['statusStr'] = '进行中';
                         }
 
+
                         var attents = obj.attents;
                         var isAttent = false;
                         for (var j = 0; j < attents.length; j++) {
@@ -286,7 +288,7 @@ var vue = new Vue({
                   return respArr;
 
             },
-            //获取所有形成列表
+            //获取所有行程列表
             getAll: function() {
                   var address = "";
                   if (!this.curWallet || this.curWallet === '') {
@@ -301,6 +303,7 @@ var vue = new Vue({
                         vue.cloneList = vue.allList;
                         console.log(vue.allList, "查询所有列表");
                         vue.allListLoading = false;
+                        vue.tempVar = false;
                   });
             },
             toAttent: function(row) {
@@ -331,13 +334,12 @@ var vue = new Vue({
                                           if (data.txhash) {
                                                 vue.dialogVisible = false;
                                                 vue.$notify({
-                                                      message: "参加行程成功，数据需要15秒时间写入区块链,请稍候刷新页面查看结果！",
+                                                      message: "参加行程成功，数据需要15秒时间写入区块链,请等待系统自动通知！",
                                                       duration: 5000,
                                                       showClose: true,
                                                       type: "warning",
                                                       offset: 150
                                                 });
-                                                window.location.href = "center.html#personal";
                                                 var neburl = "https://mainnet.nebulas.io";
                                                 var txhash = data.txhash;
                                                 intervalQuery = setInterval(() => {
@@ -353,7 +355,6 @@ var vue = new Vue({
                                                                               type: 'success'
                                                                         }).then(() => {
                                                                               window.location.href = "center.html#personal";
-                                                                              vue.getAll();
                                                                         }).catch(() => {
 
                                                                         });

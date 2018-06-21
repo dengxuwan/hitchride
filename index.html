@@ -17,8 +17,8 @@
 
     <!-- Custom styles for this template -->
     <link href="./files/agency.min.css" rel="stylesheet">
-
-  <style type="text/css"></style></head>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
 
   <body id="page-top">
     <div id="app">
@@ -204,13 +204,65 @@
                   <el-option label="已参加" value="已参加"></el-option>
                 </el-select>
               </el-form-item>
-              <br>
               <el-form-item>
                 <el-button type="primary" @click="toSearch">查询</el-button>
               </el-form-item>
             </el-form>
             <div id="allListTable"></div>
-            <el-table
+            
+             <div class="perPatent clearfix" style="padding-left: 60px">
+                 <dl v-for="(value,index) in allList" >
+                    <dt @click="toDetail(value)">
+                        <i v-if="!value.status">新行程</i>
+                        <em></em>
+                        <p class="techName" style="margin-top: 36px">
+                            <span>出发地:</span>
+                            <b>{{value.fromAddress}}</b>
+                        </p>
+                        <p class="techName">
+                            <span>目的地:</span>
+                            <b>{{value.distination}}</b>
+                        </p>
+                        <p class="techName">
+                            <span>出发时间:</span>
+                            <b>{{value.goTime | getDateTimeStr}}</b>
+                        </p>
+                        <p class="techName">
+                            <span>车型:</span>
+                            <b>{{value.type+' '}}</b>
+                        </p>
+                       <p class="techName">
+                            <span>座位数:</span>
+                            <b>{{value.count+'个'}}</b>
+                        </p>
+                        <p class="techName">
+                            <span>已有乘客:</span>
+                            <b>{{value.attents.length+'人'}}</b>
+                        </p>
+                        <p class="techName">
+                            <span>状态:</span>
+                             <b v-if="value.isAttent" style="color:#E6A23C">已参加</b>
+                             <b v-else-if="value.status" style="color:#909399">已过期</b>
+                             <b v-else-if="!value.status" style="color:#67C23A">进行中</b>
+                             <b v-else></b>
+                        </p>
+                    </dt>
+                    <dd>
+                        <p>
+                            <span class="advisory">{{value.price}}Nas</span>
+                        </p>
+                        <p>
+                           <el-button @click="toDetail(value)" type="text" size="small">详情</el-button>
+                          <el-button type="text" size="small" v-if="!value.isAttent&&!value.status&&value.current!=value.author" @click="toAttent(value)">搭乘</el-button>
+                        </p>
+                    </dd>
+                </dl>   
+            </div>
+
+
+
+
+            <el-table v-show="tempVar"
               v-loading="allListLoading"
               :data="allList"
               :row-class-name="tableRowClassName">
@@ -279,6 +331,8 @@
           </div>
         </div>
 
+
+       
 
         <div class="row indexTable1">
           <div class="next-table only-bottom-border basic-table col-md-18">

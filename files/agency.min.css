@@ -918,3 +918,6 @@ tbody {
     margin-top: 10%; 
     padding:0 5%;
 }
+.next-table-inner{
+	text-align: center;
+}
