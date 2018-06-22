@@ -212,7 +212,18 @@ var vue = new Vue({
                                     type: "warning",
                                     offset: 200
                               });
-
+                              //清空
+                              vue.travelInfo = {
+                                    name: '',
+                                    phone: '',
+                                    fromAddress: '',
+                                    distination: '',
+                                    type: '',
+                                    count: '',
+                                    price: '',
+                                    remark: '',
+                                    goTime: ''
+                              },
 
                               console.log("交易号为" + vue.serialNumber, "发布行程交易hash");
                               var neburl = "https://mainnet.nebulas.io";
@@ -290,6 +301,7 @@ var vue = new Vue({
             },
             //获取所有行程列表
             getAll: function() {
+                  this.allListLoading = true;
                   var address = "";
                   if (!this.curWallet || this.curWallet === '') {
                         address = config.myAddress;
