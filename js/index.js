@@ -207,25 +207,25 @@ var vue = new Vue({
                         if (data.txhash) {
                               vue.$notify({
                                     message: "发布行程需要15秒时间写入区块链,写入成功之后会自动提醒您！",
-                                    duration: 15000,
+                                    duration: 20000,
                                     showClose: true,
                                     type: "warning",
                                     offset: 200
                               });
                               //清空
                               vue.travelInfo = {
-                                    name: '',
-                                    phone: '',
-                                    fromAddress: '',
-                                    distination: '',
-                                    type: '',
-                                    count: '',
-                                    price: '',
-                                    remark: '',
-                                    goTime: ''
-                              },
+                                          name: '',
+                                          phone: '',
+                                          fromAddress: '',
+                                          distination: '',
+                                          type: '',
+                                          count: '',
+                                          price: '',
+                                          remark: '',
+                                          goTime: ''
+                                    },
 
-                              console.log("交易号为" + vue.serialNumber, "发布行程交易hash");
+                                    console.log("交易号为" + vue.serialNumber, "发布行程交易hash");
                               var neburl = "https://mainnet.nebulas.io";
                               var txhash = data.txhash;
                               intervalQuery = setInterval(() => {
@@ -347,9 +347,9 @@ var vue = new Vue({
                                                 vue.dialogVisible = false;
                                                 vue.$notify({
                                                       message: "参加行程成功，数据需要15秒时间写入区块链,请等待系统自动通知！",
-                                                      duration: 15000,
+                                                      duration: 20000,
                                                       showClose: true,
-                                                      type: "info",
+                                                      type: "warning",
                                                       offset: 150
                                                 });
                                                 var neburl = "https://mainnet.nebulas.io";
