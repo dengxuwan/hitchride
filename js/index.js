@@ -206,7 +206,7 @@ var vue = new Vue({
                   defaultOptions.listener = function(data) {
                         if (data.txhash) {
                               vue.$notify({
-                                    message: "发布行程需要15秒时间写入区块链,写入成功之后会自动提醒您！",
+                                    message: "发布行程需要15秒时间写入区块链,写入成功之后会自动提醒您,请耐心等待！",
                                     duration: 20000,
                                     showClose: true,
                                     type: "warning",
@@ -247,8 +247,14 @@ var vue = new Vue({
                                                       });
                                                       // success
                                                       clearInterval(intervalQuery);
-                                                } else if (d.data.status === 0) {
-                                                      alert("分享失败，请刷新页面并重试");
+                                                } else if (d.data.result.status === 0) {
+                                                       vue.$notify({
+                                                            message: "分享失败，有可能是您的余额不足!",
+                                                            duration: 0,
+                                                            showClose: true,
+                                                            type: "error",
+                                                            offset: 150
+                                                      });
                                                       clearInterval(intervalQuery);
                                                 }
                                           });
@@ -377,7 +383,7 @@ var vue = new Vue({
                                                                               message: "参与失败，有可能是您的余额不足!",
                                                                               duration: 0,
                                                                               showClose: true,
-                                                                              type: "warning",
+                                                                              type: "error",
                                                                               offset: 150
                                                                         });
                                                                         clearInterval(intervalQuery);
