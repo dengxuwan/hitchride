@@ -346,7 +346,7 @@ var vue = new Vue({
                                           if (data.txhash) {
                                                 vue.dialogVisible = false;
                                                 vue.$notify({
-                                                      message: "参加行程成功，数据需要15秒时间写入区块链,请等待系统自动通知！",
+                                                      message: "数据需要15秒时间写入区块链,是否成功请耐心等待系统自动通知！",
                                                       duration: 20000,
                                                       showClose: true,
                                                       type: "warning",
@@ -372,8 +372,14 @@ var vue = new Vue({
                                                                         });
                                                                         // success
                                                                         clearInterval(intervalQuery);
-                                                                  } else if (d.data.status === 0) {
-                                                                        alert("写入失败，请刷新页面并重试");
+                                                                  } else if (d.data.result.status === 0) {
+                                                                        vue.$notify({
+                                                                              message: "参与失败，有可能是您的余额不足!",
+                                                                              duration: 0,
+                                                                              showClose: true,
+                                                                              type: "warning",
+                                                                              offset: 150
+                                                                        });
                                                                         clearInterval(intervalQuery);
                                                                   }
                                                             });
